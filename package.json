@@ -1,0 +1,17 @@
+{
+  "name": "weppelmann-ui",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run -w @weppelmann/tokens build && npm run -w @weppelmann/styleguide build",
+    "dev": "npm run -w @weppelmann/styleguide dev",
+    "test": "npm run -w @weppelmann/components test",
+    "tokens": "npm run -w @weppelmann/tokens build",
+    "lint": "npm run -w @weppelmann/components lint"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "color": {
+    "$type": "color",
+    "bg": {
+      "canvas": {
+        "$value": "{color.neutral.50}"
+      },
+      "panel": {
+        "$value": "{color.neutral.0}"
+      },
+      "raised": {
+        "$value": "{color.neutral.50}"
+      },
+      "input": {
+        "$value": "{color.neutral.0}"
+      },
+      "hover": {
+        "$value": "{color.neutral.100}"
+      },
+      "selected": {
+        "$value": "{color.neutral.200}"
+      }
+    },
+    "border": {
+      "subtle": {
+        "$value": "{color.neutral.200}"
+      },
+      "strong": {
+        "$value": "{color.neutral.400}"
+      }
+    },
+    "text": {
+      "default": {
+        "$value": "{color.neutral.900}"
+      },
+      "muted": {
+        "$value": "{color.neutral.500}"
+      },
+      "faint": {
+        "$value": "{color.neutral.400}"
+      },
+      "on-accent": {
+        "$value": "{color.neutral.0}"
+      }
+    },
+    "accent": {
+      "default": {
+        "$value": "{color.accent.600}"
+      },
+      "hover": {
+        "$value": "{color.accent.500}"
+      },
+      "pressed": {
+        "$value": "{color.accent.700}"
+      }
+    },
+    "status": {
+      "ok": {
+        "$value": "{color.accent.700}"
+      },
+      "warn": {
+        "$value": "{color.warn.strong}"
+      },
+      "error": {
+        "$value": "{color.error.strong}"
+      }
+    },
+    "focus": {
+      "ring": {
+        "$value": "{color.accent.600}"
+      }
+    }
+  }
+}

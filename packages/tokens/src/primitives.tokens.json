@@ -1,0 +1,213 @@
+{
+  "color": {
+    "$type": "color",
+    "neutral": {
+      "1000": {
+        "$value": "#05080D"
+      },
+      "950": {
+        "$value": "#060A12"
+      },
+      "900": {
+        "$value": "#0B1220"
+      },
+      "850": {
+        "$value": "#0E1624"
+      },
+      "800": {
+        "$value": "#101821"
+      },
+      "700": {
+        "$value": "#16243A"
+      },
+      "600": {
+        "$value": "#1F3147"
+      },
+      "500": {
+        "$value": "#2B4159"
+      },
+      "400": {
+        "$value": "#5A6B7D"
+      },
+      "300": {
+        "$value": "#7C93A8"
+      },
+      "200": {
+        "$value": "#B9C6D6"
+      },
+      "100": {
+        "$value": "#D6E2F0"
+      },
+      "50": {
+        "$value": "#EDF1F6"
+      },
+      "0": {
+        "$value": "#FFFFFF"
+      }
+    },
+    "accent": {
+      "700": {
+        "$value": "#0F6B45"
+      },
+      "600": {
+        "$value": "#1C7D54"
+      },
+      "500": {
+        "$value": "#12A868"
+      },
+      "400": {
+        "$value": "#39DD93"
+      },
+      "300": {
+        "$value": "#7BEBBE"
+      }
+    },
+    "warn": {
+      "strong": {
+        "$value": "#B8791A"
+      },
+      "default": {
+        "$value": "#F3C24B"
+      }
+    },
+    "error": {
+      "strong": {
+        "$value": "#C23636"
+      },
+      "default": {
+        "$value": "#FF6A60"
+      }
+    }
+  },
+  "space": {
+    "$type": "dimension",
+    "0": {
+      "$value": "0"
+    },
+    "1": {
+      "$value": "4px"
+    },
+    "2": {
+      "$value": "8px"
+    },
+    "3": {
+      "$value": "12px"
+    },
+    "4": {
+      "$value": "16px"
+    },
+    "5": {
+      "$value": "24px"
+    },
+    "6": {
+      "$value": "32px"
+    },
+    "7": {
+      "$value": "48px"
+    },
+    "8": {
+      "$value": "64px"
+    }
+  },
+  "radius": {
+    "$type": "dimension",
+    "sm": {
+      "$value": "4px"
+    },
+    "md": {
+      "$value": "8px"
+    },
+    "lg": {
+      "$value": "12px"
+    },
+    "pill": {
+      "$value": "999px"
+    }
+  },
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "sans": {
+        "$value": "system-ui, -apple-system, 'Segoe UI Variable Text', 'Segoe UI', Cantarell, Inter, sans-serif"
+      },
+      "mono": {
+        "$value": "ui-monospace, 'JetBrains Mono', 'Cascadia Mono', Menlo, Consolas, monospace"
+      }
+    },
+    "size": {
+      "$type": "dimension",
+      "xs": {
+        "$value": "11px"
+      },
+      "sm": {
+        "$value": "12px"
+      },
+      "md": {
+        "$value": "14px"
+      },
+      "lg": {
+        "$value": "16px"
+      },
+      "xl": {
+        "$value": "20px"
+      },
+      "2xl": {
+        "$value": "28px"
+      }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "regular": {
+        "$value": 400
+      },
+      "medium": {
+        "$value": 500
+      },
+      "semibold": {
+        "$value": 600
+      }
+    },
+    "line": {
+      "$type": "number",
+      "tight": {
+        "$value": 1.2
+      },
+      "normal": {
+        "$value": 1.5
+      },
+      "mono": {
+        "$value": 1.35
+      }
+    }
+  },
+  "size": {
+    "$type": "dimension",
+    "control-sm": {
+      "$value": "28px"
+    },
+    "control-md": {
+      "$value": "32px"
+    },
+    "control-lg": {
+      "$value": "40px"
+    },
+    "border": {
+      "$value": "1px"
+    },
+    "focus": {
+      "$value": "2px"
+    },
+    "titlebar-macos": {
+      "$value": "68px"
+    }
+  },
+  "duration": {
+    "$type": "duration",
+    "fast": {
+      "$value": "120ms"
+    },
+    "normal": {
+      "$value": "200ms"
+    }
+  }
+}
