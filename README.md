@@ -13,6 +13,16 @@ ein Living Styleguide. Vue 3 + TypeScript, ausgeliefert über Tauri.
 
 Verbindlich: [PLAN.md](PLAN.md) und [AGENTS.md](AGENTS.md).
 
+## Der Styleguide
+
+![Styleguide im Dark-Modus](docs/screenshots/styleguide-dark.png)
+
+![Schaltflächen in allen Varianten und Zuständen](docs/screenshots/styleguide-components-light.png)
+
+Derselbe Katalog in `mono` — Statusfarben werden über die Form unterschieden:
+
+![Mono-Modus](docs/screenshots/styleguide-components-mono.png)
+
 ## Loslegen
 
 ```bash
