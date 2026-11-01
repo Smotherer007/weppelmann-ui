@@ -109,21 +109,6 @@
       "$value": "64px"
     }
   },
-  "radius": {
-    "$type": "dimension",
-    "sm": {
-      "$value": "4px"
-    },
-    "md": {
-      "$value": "8px"
-    },
-    "lg": {
-      "$value": "12px"
-    },
-    "pill": {
-      "$value": "999px"
-    }
-  },
   "font": {
     "family": {
       "$type": "fontFamily",

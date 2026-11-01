@@ -118,6 +118,27 @@ Regel: **`ui/` kennt keine Domäne.** Es kennt Befehle, Ereignisse und Zustände
 Damit ist das Frontend autark entwickelbar — mit gemocktem Backend, ohne PipeWire,
 ohne WoW-Installation, in der CI.
 
+### 4.3 Atomic Design (verbindlich)
+
+Die Bibliothek ist nach Atomic Design gegliedert, nicht nach Technik. Die Ebene steht im
+Pfad, damit man beim Suchen sofort weiß, wie viel Verantwortung eine Komponente hat.
+
+| Ebene | Ordner | Regel | Beispiele |
+|---|---|---|---|
+| **Atom** | `packages/components/src/atoms/` | Ein Element, keine Kenntnis anderer Komponenten außer Layout-Atomen. Darf alles über Tokens stylen, nichts entscheiden. | `WpButton`, `WpBadge`, `WpInput`, `WpCheckbox`, `WpSwitch`, `WpText`, `WpSpinner`, `WpProgress`, `WpDivider`, `WpStack` |
+| **Molekül** | `molecules/` | Setzt Atome zu einer bedienbaren Einheit zusammen (Label + Feld + Fehler). Kennt keine Domäne. | `WpFormField`, `WpSelect`, `WpMultiselect`, `WpCombobox`, `WpRadioGroup`, `WpTabs`, `WpToast`, `WpEmptyState` |
+| **Organismus** | `organisms/` | Eine abgeschlossene Fläche mit eigenem Zustand (Tabelle, Dialog, Menü, Karte). Darf Moleküle enthalten, keine App-Daten. | `WpTable`, `WpDialog`, `WpMenu`, `WpCard`, `WpToolbar` |
+| **Template** | `apps/styleguide/src/templates/` | Skelett einer Seite: wo welche Organismen stehen, ohne echte Daten. Bleibt im Styleguide — eine App kann es kopieren, die Bibliothek liefert es nicht. | Katalog-Layout, Einstellungs-Layout |
+| **Page** | `apps/styleguide/src/pages/` | Template mit echten Beispieldaten. Zeigt das Zusammenspiel und ist die Vorlage für die App-Bildschirme. | Addon-Katalog, Einstellungen, Kanalzug |
+
+Zwei Regeln dazu:
+
+- **Aufstieg ist verboten, Abstieg erlaubt.** Ein Atom darf kein Molekül importieren; ein
+  Organismus darf Atome und Moleküle nutzen. Wer eine Ausnahme braucht, hat die Ebene
+  falsch gewählt.
+- **Der Styleguide zeigt jede Ebene und mindestens eine Seite je Template.** Ein Katalog
+  aus Einzelteilen beantwortet nicht die Frage, ob die Teile zusammen funktionieren.
+
 ## 5. Komponenteninventar
 
 Aus dem Bestand gezogen (Zählung über alle drei Apps), gemappt auf die Web-Bibliothek.

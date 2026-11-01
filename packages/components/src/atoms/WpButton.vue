@@ -1,6 +1,9 @@
 <script setup lang="ts">
 // Zustand ist ein Summentyp, kein Fächer aus Booleans:
 // "busy" und "disabled" sind Zustände, keine Flags (AGENTS.md §2.2).
+import type { Component } from "vue";
+import WpIcon from "./WpIcon.vue";
+
 type Variant = "primary" | "secondary" | "ghost" | "danger";
 type Size = "sm" | "md" | "lg";
 type State = "default" | "busy" | "disabled";
@@ -11,6 +14,8 @@ const props = withDefaults(
     variant?: Variant;
     size?: Size;
     state?: State;
+    /** Icon links vom Text. Kennt kein Icon-Set, nimmt die Grafik als Komponente. */
+    icon?: Component;
   }>(),
   { variant: "secondary", size: "md", state: "default" },
 );
@@ -34,6 +39,7 @@ function onClick() {
     @click="onClick"
   >
     <span v-if="state === 'busy'" class="wp-button__spinner" aria-hidden="true" />
+    <WpIcon v-else-if="icon" :icon="icon" size="sm" />
     <span class="wp-button__label">{{ label }}</span>
   </button>
 </template>

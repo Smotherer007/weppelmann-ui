@@ -1,0 +1,13 @@
+{
+  "name": "@weppelmann/icons",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "lucide-vue-next": "^1.0.0"
+  },
+  "description": "Kuratierte Icon-Auswahl (Lucide, MIT) f\u00fcr alle Weppelmann-Apps."
+}

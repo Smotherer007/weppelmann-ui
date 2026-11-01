@@ -13,5 +13,9 @@
   "scripts": {
     "test": "vitest run",
     "lint": "eslint src"
+  },
+  "dependencies": {
+    "@weppelmann/icons": "*",
+    "lucide-vue-next": "^1.0.0"
   }
 }

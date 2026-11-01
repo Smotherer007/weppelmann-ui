@@ -18,6 +18,10 @@ export default defineConfig({
       { find: /^@weppelmann\/components\/(.*)$/, replacement: components("$1") },
       { find: /^@weppelmann\/tokens-css$/, replacement: tokens("css/vars.css") },
       { find: /^@weppelmann\/tokens$/, replacement: tokens("json/tokens.json") },
+      {
+        find: /^@weppelmann\/icons$/,
+        replacement: resolve(here, "../../packages/icons/src/index.ts"),
+      },
     ],
   },
   server: { port: 5173 },

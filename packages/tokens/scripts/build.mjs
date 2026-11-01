@@ -67,6 +67,17 @@ for (const theme of THEMES) {
   );
 }
 
+// Maße und Schrift sind modusunabhängig und gelten für alle Themes.
+// Ohne diesen Block laufen var(--wp-space-2) und var(--wp-size-control-md) ins Leere
+// (CSS-Variablen ohne Deklaration sind ungültig, nicht "null") — der Fehler ist
+// unsichtbar, bis man die Abstände vermisst.
+const BASE_GROUPS = ["space", "font", "size", "duration"];
+const base = Object.fromEntries(
+  Object.entries(primitives)
+    .filter(([path]) => BASE_GROUPS.includes(path.split(".")[0]))
+    .map(([path, token]) => [path, resolve_(token, primitives)]),
+);
+
 // Jede semantische Gruppe muss in allen drei Themes vollständig sein.
 const reference = Object.keys(themes[THEMES[0]]).sort();
 for (const theme of THEMES.slice(1)) {
@@ -80,7 +91,11 @@ for (const theme of THEMES.slice(1)) {
   }
 }
 
-// CSS: Standard ist dark und gilt ohne Attribut; die anderen über data-theme.
+// CSS: die Maße einmal global, die Farben je Modus.
+const baseBlock = `:root {\n${Object.entries(base)
+  .map(([path, value]) => `  --wp-${kebab(path)}: ${value};`)
+  .join("\n")}\n}`;
+
 const cssBlocks = THEMES.map((theme) => {
   const body = Object.entries(themes[theme])
     .map(([path, value]) => `  --wp-${kebab(path)}: ${value};`)
@@ -91,7 +106,7 @@ const cssBlocks = THEMES.map((theme) => {
 });
 
 const header = `/* Erzeugt von packages/tokens/scripts/build.mjs — nicht von Hand ändern. */\n`;
-const css = header + cssBlocks.join("\n\n") + "\n";
+const css = header + baseBlock + "\n\n" + cssBlocks.join("\n\n") + "\n";
 
 // JSON: für Styleguide, Werkzeuge und Vergleiche.
 const json = JSON.stringify({ version: 1, themes }, null, 2) + "\n";
