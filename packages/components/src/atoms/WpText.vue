@@ -16,7 +16,7 @@ withDefaults(defineProps<{ variant?: Variant; tone?: Tone; as?: string }>(),
 .wp-text--body { font-size: var(--wp-font-size-md); }
 .wp-text--caption { font-size: var(--wp-font-size-xs); }
 .wp-text--label { font-size: var(--wp-font-size-sm); }
-.wp-text--heading { font-size: var(--wp-font-size-xl); font-weight: var(--wp-font-weight-semibold); line-height: var(--wp-font-line-tight); }
+.wp-text--heading { font-family: var(--wp-font-family-display); font-size: var(--wp-font-size-xl); font-weight: var(--wp-font-weight-semibold); line-height: var(--wp-font-line-tight); letter-spacing: -0.01em; }
 .wp-text--mono { font-family: var(--wp-font-family-mono); font-size: var(--wp-font-size-sm); font-variant-numeric: tabular-nums; }
 .wp-text.tone-muted { color: var(--wp-color-text-muted); }
 .wp-text.tone-faint { color: var(--wp-color-text-faint); }

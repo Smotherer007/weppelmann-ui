@@ -1,0 +1,27 @@
+[
+  {
+    "family": "Archivo",
+    "weight": "400 700",
+    "file": "Archivo-400-700.woff2"
+  },
+  {
+    "family": "IBM Plex Sans",
+    "weight": "300 600",
+    "file": "PlexSans-300-600.woff2"
+  },
+  {
+    "family": "IBM Plex Mono",
+    "weight": "400",
+    "file": "PlexMono-400.woff2"
+  },
+  {
+    "family": "IBM Plex Mono",
+    "weight": "500",
+    "file": "PlexMono-500.woff2"
+  },
+  {
+    "family": "IBM Plex Mono",
+    "weight": "600",
+    "file": "PlexMono-600.woff2"
+  }
+]

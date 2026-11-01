@@ -9,7 +9,8 @@
   ],
   "exports": {
     ".": "./dist/json/tokens.json",
-    "./css": "./dist/css/vars.css"
+    "./css": "./dist/css/vars.css",
+    "./fonts.css": "./dist/css/fonts.css"
   },
   "scripts": {
     "build": "node scripts/build.mjs",

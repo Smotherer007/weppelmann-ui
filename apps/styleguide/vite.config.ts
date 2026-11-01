@@ -16,6 +16,7 @@ export default defineConfig({
     alias: [
       { find: /^@weppelmann\/components$/, replacement: components("index.ts") },
       { find: /^@weppelmann\/components\/(.*)$/, replacement: components("$1") },
+      { find: /^@weppelmann\/tokens-fonts$/, replacement: tokens("css/fonts.css") },
       { find: /^@weppelmann\/tokens-css$/, replacement: tokens("css/vars.css") },
       { find: /^@weppelmann\/tokens$/, replacement: tokens("json/tokens.json") },
       {
@@ -24,5 +25,6 @@ export default defineConfig({
       },
     ],
   },
-  server: { port: 5173 },
+  // Die Bibliothek liegt außerhalb des Projektordners; der Dev-Server darf sie lesen.
+  server: { port: 5173, fs: { allow: [resolve(here, "../..")] } },
 });

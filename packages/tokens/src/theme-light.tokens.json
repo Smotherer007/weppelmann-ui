@@ -9,13 +9,13 @@
         "$value": "{color.neutral.0}"
       },
       "raised": {
-        "$value": "{color.neutral.50}"
+        "$value": "{color.neutral.100}"
       },
       "input": {
         "$value": "{color.neutral.0}"
       },
       "hover": {
-        "$value": "{color.neutral.100}"
+        "$value": "{color.neutral.50}"
       },
       "selected": {
         "$value": "{color.neutral.200}"
@@ -56,7 +56,7 @@
     },
     "status": {
       "ok": {
-        "$value": "{color.accent.700}"
+        "$value": "{color.ok.strong}"
       },
       "warn": {
         "$value": "{color.warn.strong}"

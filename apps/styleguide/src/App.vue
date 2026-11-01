@@ -118,7 +118,7 @@ const levels = [
 }
 .brand { display: flex; align-items: flex-start; gap: var(--wp-space-2); flex: none; }
 .brand__mark { color: var(--wp-color-accent-default); }
-.brand__name { margin: 0; font-size: var(--wp-font-size-md); font-weight: var(--wp-font-weight-semibold); }
+.brand__name { margin: 0; font-family: var(--wp-font-family-display); font-size: var(--wp-font-size-md); font-weight: var(--wp-font-weight-semibold); letter-spacing: -0.01em; }
 .brand__sub { margin: 0; font-size: var(--wp-font-size-xs); color: var(--wp-color-text-faint); letter-spacing: 0.04em; }
 .levels { display: flex; gap: var(--wp-space-1); flex: 1 1 380px; flex-wrap: wrap; align-items: flex-start; }
 .levels__link {
@@ -141,7 +141,7 @@ const levels = [
 .block__head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--wp-space-4); flex-wrap: wrap; margin-bottom: var(--wp-space-3); }
 .block__level { margin: 0 0 2px; font-family: var(--wp-font-family-mono); font-size: var(--wp-font-size-xs); color: var(--wp-color-accent-default); letter-spacing: 0.06em; text-transform: uppercase; }
 .block__note { margin: 4px 0 0; font-size: var(--wp-font-size-sm); color: var(--wp-color-text-muted); max-width: 68ch; }
-.block h2 { margin: 0; font-size: var(--wp-font-size-xl); font-weight: var(--wp-font-weight-semibold); }
+.block h2 { margin: 0; font-family: var(--wp-font-family-display); font-size: var(--wp-font-size-xl); font-weight: var(--wp-font-weight-semibold); letter-spacing: -0.01em; }
 .page-switch { display: flex; gap: 2px; }
 .page-switch button {
   background: var(--wp-color-bg-raised); border: var(--wp-size-border) solid var(--wp-color-border-subtle);

@@ -3,79 +3,87 @@
     "$type": "color",
     "neutral": {
       "1000": {
-        "$value": "#05080D"
+        "$value": "#05070A"
       },
       "950": {
-        "$value": "#060A12"
+        "$value": "#090C10"
       },
       "900": {
-        "$value": "#0B1220"
+        "$value": "#0E1319"
       },
       "850": {
-        "$value": "#0E1624"
+        "$value": "#131A22"
       },
       "800": {
-        "$value": "#101821"
+        "$value": "#18202A"
       },
       "700": {
-        "$value": "#16243A"
+        "$value": "#1F2831"
       },
       "600": {
-        "$value": "#1F3147"
+        "$value": "#2E3A46"
       },
       "500": {
-        "$value": "#2B4159"
+        "$value": "#3E4C5A"
       },
       "400": {
-        "$value": "#5A6B7D"
+        "$value": "#78838F"
       },
       "300": {
-        "$value": "#7C93A8"
+        "$value": "#98A3AF"
       },
       "200": {
-        "$value": "#B9C6D6"
+        "$value": "#C9C3B7"
       },
       "100": {
-        "$value": "#D6E2F0"
+        "$value": "#E9E5DC"
       },
       "50": {
-        "$value": "#EDF1F6"
+        "$value": "#F6F2EA"
       },
       "0": {
-        "$value": "#FFFFFF"
+        "$value": "#FFFDF8"
       }
     },
     "accent": {
       "700": {
-        "$value": "#0F6B45"
+        "$value": "#8C520C"
       },
       "600": {
-        "$value": "#1C7D54"
+        "$value": "#A96410"
       },
       "500": {
-        "$value": "#12A868"
+        "$value": "#C9862C"
       },
       "400": {
-        "$value": "#39DD93"
+        "$value": "#F2A63B"
       },
       "300": {
-        "$value": "#7BEBBE"
+        "$value": "#FFC873"
       }
     },
     "warn": {
       "strong": {
-        "$value": "#B8791A"
+        "$value": "#A86A0E"
       },
       "default": {
-        "$value": "#F3C24B"
+        "$value": "#F2A63B"
       }
     },
     "error": {
       "strong": {
-        "$value": "#C23636"
+        "$value": "#A8321E"
       },
       "default": {
-        "$value": "#FF6A60"
+        "$value": "#D9614A"
+      }
+    },
+    "ok": {
+      "strong": {
+        "$value": "#4F7A2E"
+      },
+      "default": {
+        "$value": "#86B26A"
       }
     }
   },
@@ -109,14 +117,23 @@
       "$value": "64px"
     }
   },
+  "radius": {
+    "$type": "dimension",
+    "none": {
+      "$value": "0"
+    }
+  },
   "font": {
     "family": {
       "$type": "fontFamily",
       "sans": {
-        "$value": "system-ui, -apple-system, 'Segoe UI Variable Text', 'Segoe UI', Cantarell, Inter, sans-serif"
+        "$value": "'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif"
+      },
+      "display": {
+        "$value": "Archivo, 'IBM Plex Sans', system-ui, sans-serif"
       },
       "mono": {
-        "$value": "ui-monospace, 'JetBrains Mono', 'Cascadia Mono', Menlo, Consolas, monospace"
+        "$value": "'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace"
       }
     },
     "size": {

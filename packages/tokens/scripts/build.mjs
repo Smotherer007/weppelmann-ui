@@ -9,7 +9,7 @@
 // Primitiven sind nicht Teil der öffentlichen API — nur semantische Tokens werden
 // als CSS-Variablen ausgegeben.
 
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { copyFileSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -123,7 +123,38 @@ mkdirSync(join(distDir, "json"), { recursive: true });
 writeFileSync(join(distDir, "css", "vars.css"), css);
 writeFileSync(join(distDir, "json", "tokens.json"), json);
 
+// Schriften: die Dateien liegen im Paket, damit keine Anwendung sie aus dem Netz
+// laden muss (Desktop-Anwendungen sollen offline starten). Der Compiler schreibt
+// die @font-face-Regeln und kopiert die woff2-Dateien daneben.
+let fontsInfo = "";
+try {
+  const faces = JSON.parse(readFileSync(join(srcDir, "..", "fonts.json"), "utf8"));
+  mkdirSync(join(distDir, "css", "fonts"), { recursive: true });
+  for (const face of faces) {
+    copyFileSync(
+      join(srcDir, "..", "fonts", face.file),
+      join(distDir, "css", "fonts", face.file),
+    );
+  }
+  const rules = faces
+    .map(
+      (face) => `@font-face {
+  font-family: '${face.family}';
+  font-style: normal;
+  font-weight: ${face.weight};
+  font-display: swap;
+  src: url('./fonts/${face.file}') format('woff2');
+}`,
+    )
+    .join("\n");
+  writeFileSync(join(distDir, "css", "fonts.css"), header + rules + "\n");
+  fontsInfo = `dist/css/fonts.css       ${faces.length} Schnitte`;
+} catch (error) {
+  fontsInfo = `keine Schriften (${error.message})`;
+}
+
 console.log(`dist/css/vars.css        ${css.length} Bytes`);
 console.log(`dist/json/tokens.json    ${json.length} Bytes`);
+if (fontsInfo) console.log(fontsInfo);
 console.log(`${reference.length} semantische Tokens × ${THEMES.length} Themes, `
   + `${Object.keys(primitives).length} Primitiven`);
