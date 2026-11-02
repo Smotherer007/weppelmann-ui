@@ -18,6 +18,7 @@ export { default as WpSlider } from "./atoms/WpSlider.vue";
 export { default as WpIcon } from "./atoms/WpIcon.vue";
 
 // ------------------------------------------------------------- Moleküle
+export { default as WpIconButton } from "./atoms/WpIconButton.vue";
 export { default as WpLink } from "./atoms/WpLink.vue";
 export { default as WpImageFrame } from "./molecules/WpImageFrame.vue";
 export { default as WpFormField } from "./molecules/WpFormField.vue";

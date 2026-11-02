@@ -4,6 +4,7 @@ import { ref } from "vue";
 // Zeigt im Styleguide, was das Atom meldet.
 const letzterLink = ref("");
 import * as UI from "@weppelmann/components";
+import { IconPlus, IconRefresh, IconSearch, IconSun, IconTrash } from "@weppelmann/icons";
 const variants = ["primary", "secondary", "ghost", "danger"] as const;
 const tones = ["neutral", "ok", "warn", "error"] as const;
 const text = ref("Kick");
@@ -108,6 +109,21 @@ const checked = ref(false);
         </p>
       </div>
 
+      <div class="cell">
+        <p class="cell__label">WpIconButton — nur ein Zeichen, Name für Screenreader</p>
+        <div class="reihe">
+          <UI.WpIconButton :icon="IconSearch" label="Suchen" />
+          <UI.WpIconButton :icon="IconPlus" label="Gerät hinzufügen" variant="ghost" />
+          <UI.WpIconButton :icon="IconRefresh" label="Neu laden" size="lg" />
+          <UI.WpIconButton :icon="IconSun" label="Farbschema" :active="true" />
+          <UI.WpIconButton :icon="IconTrash" label="Löschen" :disabled="true" />
+        </div>
+        <p class="cell__hint">
+          Quadratisch mit fester Breite; `label` ist Pflicht, sonst ist der Knopf
+          für Screenreader leer.
+        </p>
+      </div>
+
     </div>
   </section>
 </template>
@@ -120,4 +136,5 @@ const checked = ref(false);
 .row { display: flex; gap: var(--wp-space-2); align-items: center; }
 .wrap { flex-wrap: wrap; }
 code { font-family: var(--wp-font-family-mono); font-size: 11px; background: var(--wp-color-bg-raised); padding: 1px 4px; }
+.reihe { display: flex; gap: var(--wp-space-2); align-items: center; flex-wrap: wrap; }
 </style>
