@@ -1,3 +1,20 @@
+
+/* Alles, was man anfassen kann, zeigt das auch: Hand statt Pfeil. Gilt auch fuer
+   native Elemente (Kästchen, Auswahlfeld, Schieber), die eine App direkt setzt —
+   sonst sieht man nicht, dass sie bedienbar sind. Was nicht bedienbar ist, sagt
+   das Gegenteil. */
+button, [role="button"], [role="tab"], [role="option"], [role="menuitem"],
+select, summary, a[href],
+input[type="checkbox"], input[type="radio"], input[type="range"],
+input[type="color"], input[type="file"], input[type="submit"], input[type="button"],
+label { cursor: pointer; }
+
+button:disabled, input:disabled, select:disabled, textarea:disabled,
+[aria-disabled="true"], [aria-disabled="true"] * { cursor: not-allowed; }
+
+/* Text schreibt man mit der Schreibmarke, nicht mit der Hand. */
+input[type="text"], input[type="search"], input[type="number"], input[type="password"],
+input[type="email"], input[type="url"], input[type="tel"], textarea { cursor: text; }
 /* Gemeinsame Grundlage: nur Tokens, kein Literal. */
 .wp-root {
   background: var(--wp-color-bg-canvas);

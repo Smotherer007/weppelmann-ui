@@ -37,5 +37,5 @@ defineEmits<{ "update:modelValue": [value: boolean] }>();
 .wp-switch__input:checked + .wp-switch__track .wp-switch__knob { left: 18px; background: var(--wp-color-text-on-accent); }
 .wp-switch__input:focus-visible + .wp-switch__track { outline: var(--wp-size-focus) solid var(--wp-color-focus-ring); outline-offset: 2px; }
 .wp-switch__label { font-size: var(--wp-font-size-md); }
-.wp-switch.is-disabled { opacity: 0.55; cursor: default; }
+.wp-switch.is-disabled { opacity: 0.55; cursor: not-allowed; }
 </style>

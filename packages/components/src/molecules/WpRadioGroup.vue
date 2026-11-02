@@ -27,5 +27,5 @@ defineEmits<{ "update:modelValue": [value: string] }>();
 .wp-radio__legend { font-size: var(--wp-font-size-sm); color: var(--wp-color-text-muted); padding: 0 0 4px; }
 .wp-radio__item { display: inline-flex; align-items: center; gap: var(--wp-space-2); font-size: var(--wp-font-size-md); cursor: pointer; }
 .wp-radio__item input { margin: 0; accent-color: var(--wp-color-accent-default); }
-.wp-radio__item.is-disabled { opacity: 0.55; cursor: default; }
+.wp-radio__item.is-disabled { opacity: 0.55; cursor: not-allowed; }
 </style>

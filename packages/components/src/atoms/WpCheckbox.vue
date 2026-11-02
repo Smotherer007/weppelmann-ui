@@ -29,5 +29,5 @@ const checked = () => props.modelValue;
   border-radius: 0;
 }
 .wp-check__label { font-size: var(--wp-font-size-md); }
-.wp-check.is-disabled { opacity: 0.55; cursor: default; }
+.wp-check.is-disabled { opacity: 0.55; cursor: not-allowed; }
 </style>

@@ -79,7 +79,7 @@ function onClick() {
 .wp-button:hover:not(.is-disabled):not(.is-busy) { background: var(--wp-color-bg-hover); }
 .wp-button--primary:hover:not(.is-disabled):not(.is-busy) { background: var(--wp-color-accent-hover); }
 .wp-button:active:not(.is-disabled):not(.is-busy) { background: var(--wp-color-bg-selected); }
-.wp-button.is-disabled, .wp-button.is-busy { opacity: 0.55; cursor: default; }
+.wp-button.is-disabled, .wp-button.is-busy { opacity: 0.55; cursor: not-allowed; }
 
 .wp-button__spinner {
   width: 12px; height: 12px; border-radius: var(--wp-radius-pill);

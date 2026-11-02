@@ -36,5 +36,5 @@ defineEmits<{ "update:modelValue": [value: string] }>();
 .wp-input::placeholder { color: var(--wp-color-text-faint); }
 .wp-input:focus-visible { outline: var(--wp-size-focus) solid var(--wp-color-focus-ring); outline-offset: 0; }
 .wp-input.is-invalid { border-color: var(--wp-color-status-error); }
-.wp-input.is-disabled { opacity: 0.55; cursor: default; }
+.wp-input.is-disabled { opacity: 0.55; cursor: not-allowed; }
 </style>
