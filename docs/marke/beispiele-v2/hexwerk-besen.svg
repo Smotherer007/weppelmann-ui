@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" version="1.1">
+  <!-- Hexwerk — Marken-Zeichen, Stil "Stempel". Hexe: der Besen steht fuer den Namen. -->
+  <title>Hexwerk</title>
+  <path d="M 96 16 H 416 L 496 96 V 416 L 416 496 H 96 L 16 416 V 96 Z" fill="#4F7A2E"/>
+  <g fill="none" stroke="#E9E5DC" stroke-width="16" stroke-linecap="square" stroke-linejoin="miter">
+    <!-- Hexenbesen: Stiel, Bindeband, breites Reisig. Fuenf dicke Borsten statt
+       sieben duenne - auf 32 px verschmilzt duennes Reisig zu einem Fleck. -->
+    <path d="M 118 92 L 292 266" stroke-width="24"/>
+    <path d="M 268 242 L 328 302" stroke-width="32"/>
+    <path d="M 314 292 C 348 330 372 368 386 410" stroke-width="20"/>
+    <path d="M 308 306 C 326 348 336 386 338 424" stroke-width="20"/>
+    <path d="M 296 316 C 300 358 294 396 282 428" stroke-width="20"/>
+    <path d="M 284 322 C 274 362 258 396 236 420" stroke-width="20"/>
+    <path d="M 274 326 C 254 358 230 382 204 398" stroke-width="20"/>
+  </g>
+</svg>
