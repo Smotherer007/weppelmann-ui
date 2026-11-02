@@ -3,7 +3,7 @@
 import { ref } from "vue";
 import * as UI from "@weppelmann/components";
 import type { Column, TableState } from "@weppelmann/components";
-import { IconChevronDown } from "@weppelmann/icons";
+import { IconChevronDown, IconWifi } from "@weppelmann/icons";
 
 const columns: Column[] = [
   { key: "name", label: "Addon", sortable: true },
@@ -22,6 +22,23 @@ const fehler: TableState = { kind: "fehler", message: "Die Quelle antwortete mit
 const sortKey = ref("name");
 const sortDir = ref<"asc" | "desc">("asc");
 
+// Die fünf Organismen aus WLED Ambilight. Sie stehen hier, weil sie in einer
+// laufenden App benutzt werden — nicht, weil sie sich gut anhören.
+const railTabs = [
+  { id: "zonen", label: "Zonen" },
+  { id: "bild", label: "Bild" },
+  { id: "app", label: "App" },
+];
+const railTab = ref("zonen");
+const demogeraete = ["192.168.178.151", "openrgb · Tastatur"];
+const demofarben: [number, number, number][] = Array.from({ length: 48 }, (_, i) => {
+  const h = (i / 48) * 360;
+  const f = (n: number) => {
+    const k = (n + h / 60) % 6;
+    return Math.round(255 * (1 - Math.max(0, Math.min(k, 4 - k, 1))) * 0.9 + 20);
+  };
+  return [f(5), f(3), f(1)] as [number, number, number];
+});
 const dialogOpen = ref(false);
 const chosen = ref<string | null>(null);
 const menuItems = [
@@ -82,6 +99,46 @@ const menuItems = [
       </div>
 
       <div class="cell">
+        <p class="cell__label">WpAppBar · WpSidePanel · WpInspector · WpTelemetryBar · WpColorStrip</p>
+        <p class="cell__hint">
+          Fünf Organismen, die aus der laufenden Ambilight-App herausgeschnitten und von
+          Domäne befreit wurden: Titel, Zähler, Zustand und Handlungen kommen herein,
+          Geräte und Zahlen bleiben in der App.
+        </p>
+        <div class="demo">
+          <UI.WpAppBar title="WLED Ambilight" :icon="IconWifi">
+            <template #status><UI.WpBadge tone="ok" label="Live · 45 fps" /></template>
+            <template #actions>
+              <UI.WpButton label="Neustart" size="sm" />
+              <UI.WpButton label="Pausieren" size="sm" variant="primary" />
+            </template>
+          </UI.WpAppBar>
+          <div class="demo__body">
+            <UI.WpSidePanel title="Geräte" :count="demogeraete.length">
+              <div v-for="(g, i) in demogeraete" :key="g" class="demo__device">
+                <span class="demo__name">{{ g }}</span>
+                <UI.WpBadge :tone="i === 0 ? 'ok' : 'neutral'" :label="i === 0 ? 'verbunden' : 'bereit'" />
+              </div>
+              <template #footer><UI.WpButton label="Per Adresse hinzufügen" size="sm" /></template>
+            </UI.WpSidePanel>
+            <div class="demo__stage">
+              <p class="cell__hint">Hier liegt die Vorschau (Fläche, die die App füllt).</p>
+            </div>
+            <UI.WpInspector :tabs="railTabs" :model-value="railTab" width="230px"
+                            @update:model-value="railTab = $event">
+              <UI.WpText variant="caption" tone="muted">Reiter „{{ railTab }}“ — Inhalt kommt aus der App.</UI.WpText>
+            </UI.WpInspector>
+          </div>
+          <UI.WpTelemetryBar title="Ausgabe" stats="in 44 fps · out 50 fps">
+            <div class="demo__row">
+              <span class="demo__name">WLED</span>
+              <UI.WpColorStrip :colors="demofarben" label="48 Werte" />
+            </div>
+          </UI.WpTelemetryBar>
+        </div>
+      </div>
+
+      <div class="cell">
         <p class="cell__label">WpToolbar</p>
         <UI.WpToolbar title="Addon-Katalog" subtitle="12 Quellen · 4.812 Addons">
           <template #search><UI.WpInput model-value="" placeholder="Suchen …" /></template>
@@ -110,5 +167,11 @@ const menuItems = [
 .states { display: flex; flex-direction: column; gap: var(--wp-space-2); }
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: var(--wp-space-4); }
 .row { display: flex; gap: var(--wp-space-2); align-items: center; }
+.demo { display: flex; flex-direction: column; border: var(--wp-size-border) solid var(--wp-color-border-strong); background: var(--wp-color-bg-canvas); }
+.demo__body { display: flex; align-items: stretch; min-height: 200px; }
+.demo__stage { flex: 1; display: flex; align-items: center; justify-content: center; padding: var(--wp-space-3); }
+.demo__device { display: flex; align-items: center; justify-content: space-between; gap: var(--wp-space-2); padding: var(--wp-space-2); border: var(--wp-size-border) solid var(--wp-color-border-subtle); background: var(--wp-color-bg-raised); }
+.demo__name { font-family: var(--wp-font-family-mono); font-size: var(--wp-font-size-xs); color: var(--wp-color-text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.demo__row { display: grid; grid-template-columns: 120px 1fr; align-items: center; gap: var(--wp-space-2); }
 @media (max-width: 900px) { .split, .two { grid-template-columns: 1fr; } }
 </style>
