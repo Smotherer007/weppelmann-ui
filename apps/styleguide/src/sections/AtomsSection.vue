@@ -65,6 +65,19 @@ const checked = ref(false);
       <div class="cell">
         <p class="cell__label">WpSpinner · WpProgress</p>
         <div class="row"><UI.WpSpinner /><UI.WpSpinner size="md" /></div>
+      <div class="cell">
+        <p class="cell__label">WpNyan — Ladeanzeige (Spinner-Ersatz)</p>
+        <div class="reihe">
+          <UI.WpNyan :active="true" label="lädt" />
+          <UI.WpNyan :active="false" label="steht" />
+        </div>
+        <p class="cell__hint">
+          Läuft, solange der Vorgang läuft; danach steht das erste Bild. Raster und
+          Zyklen stammen aus der GTK-Fassung (96 × 26, 83 ms je Bild), gezeichnet
+          auf ein Canvas. Unter <code>prefers-reduced-motion</code> bleibt das Bild stehen.
+        </p>
+      </div>
+
         <UI.WpProgress :value="72" label="Installation" />
         <UI.WpProgress :value="null" label="Suche" />
       </div>
