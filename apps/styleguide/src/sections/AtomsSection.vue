@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
+
+// Zeigt im Styleguide, was das Atom meldet.
+const letzterLink = ref("");
 import * as UI from "@weppelmann/components";
 const variants = ["primary", "secondary", "ghost", "danger"] as const;
 const tones = ["neutral", "ok", "warn", "error"] as const;
@@ -73,6 +76,19 @@ const checked = ref(false);
         <UI.WpText variant="mono" tone="ok">-6.2 dB</UI.WpText>
         <UI.WpDivider spaced />
       </div>
+      <div class="cell">
+        <p class="cell__label">WpLink — meldet `open`, öffnet nicht selbst</p>
+        <UI.WpLink href="https://hexwerk.weppelmann.eu" external label="hexwerk.weppelmann.eu"
+                   @open="letzterLink = $event" />
+        <UI.WpLink href="https://github.com/Smotherer007" external label="Smotherer007 auf GitHub"
+                   @open="letzterLink = $event" />
+        <p class="cell__hint">
+          Die Bibliothek kennt keine Fenster: sie meldet die Adresse, die App ruft
+          den Systembrowser. In WebKitGTK tut `target="_blank"` genau nichts.
+          <template v-if="letzterLink">Geöffnet werden würde: {{ letzterLink }}</template>
+        </p>
+      </div>
+
     </div>
   </section>
 </template>

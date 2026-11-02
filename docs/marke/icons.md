@@ -63,3 +63,13 @@ data/icons/symbolic/…/*.svg     Symbolstil, currentColor
 
 Die Motive sind Vorschlag, nicht Beschluss. Fläche, Strichsprache und Detailgrad
 stehen; gezeichnet wird je Anwendung.
+
+## Die Marke in der App
+
+Die Marke in der Kopfzeile ist **das Icon aus `assets/icon.svg`** der jeweiligen
+App, kopiert nach `ui/public/icon.svg` und als `<img>` eingebunden — nie ein
+Platzhalter aus der Icon-Bibliothek. Ein Sechseck mit „H" sieht nach Hexwerk aus
+und ist es nicht; der Hut ist die Marke. Gilt genauso für Tray und Fenstersymbol.
+
+Das war ein echter Fehler: `WpIcon :icon="IconBrand"` stand in der Kopfzeile,
+während der Hut ungenutzt in `assets/` lag.

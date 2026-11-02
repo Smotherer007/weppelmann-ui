@@ -9,6 +9,17 @@ const picks = ref<string[]>(["wled", "govee"]);
 const search = ref<string | null>(null);
 const mode = ref("smooth");
 const tab = ref("geraete");
+// Ein echtes Bild statt Platzhalter: das graue Kästchen ist die Flaeche, die
+// jeder Zustand gleich gross haelt.
+const bild =
+  "data:image/svg+xml;utf8," +
+  encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180">' +
+    '<rect width="320" height="180" fill="#131A22"/>' +
+    '<rect x="24" y="96" width="272" height="8" fill="#1F2831"/>' +
+    '<rect x="24" y="112" width="180" height="8" fill="#1F2831"/>' +
+    '<circle cx="64" cy="56" r="22" fill="#F2A63B"/>' +
+    '<rect x="104" y="40" width="160" height="10" fill="#E9E5DC"/>' +
+    '<rect x="104" y="58" width="110" height="8" fill="#98A3AF"/></svg>');
 const name = ref("Wohnzimmer");
 const options = [
   { value: "wled", label: "WLED", hint: "DDP, 60 Hz" },
@@ -87,6 +98,19 @@ const tabs = [
       </div>
 
       <div class="cell">
+        <p class="cell__label">WpImageFrame — drei Zustände, gleiches Format</p>
+        <div class="bilder">
+          <UI.WpImageFrame :state="{ kind: 'bild', src: bild }" caption="1 / 3 · Screenshot" alt="Vorschau" />
+          <UI.WpImageFrame :state="{ kind: 'laedt' }" :ratio="'16 / 9'" caption="lädt" />
+          <UI.WpImageFrame :state="{ kind: 'fehlt', text: 'keine Vorschau' }" :ratio="'16 / 9'" />
+        </div>
+        <p class="cell__hint">
+          Rahmen als Haarlinie, Bild eingepasst statt beschnitten — in einer Galerie
+          springt nichts, wenn die Bilder unterschiedlich groß sind.
+        </p>
+      </div>
+
+      <div class="cell">
         <p class="cell__label">WpEmptyState</p>
         <UI.WpEmptyState kind="keine-treffer" title="Keine Geräte gefunden" description="Suche im Netzwerk, oder trage die Adresse von Hand ein.">
           <template #action><UI.WpButton label="Netzwerk durchsuchen" :icon="IconSearch" variant="primary" /></template>
@@ -100,5 +124,6 @@ const tabs = [
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: var(--wp-space-4); }
 .cell { display: flex; flex-direction: column; gap: var(--wp-space-3); padding: var(--wp-space-3); border: var(--wp-size-border) solid var(--wp-color-border-subtle); background: var(--wp-color-bg-panel); }
 .cell__label { margin: 0; font-family: var(--wp-font-family-mono); font-size: var(--wp-font-size-xs); color: var(--wp-color-text-faint); }
+.bilder { display: grid; grid-template-columns: 1fr; gap: var(--wp-space-2); }
 .cell__hint { margin: 0; font-size: var(--wp-font-size-xs); color: var(--wp-color-text-faint); }
 </style>
