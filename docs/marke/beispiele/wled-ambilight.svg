@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" version="1.1">
+  <!-- WLED Ambilight, Marken-Zeichen nach docs/marke/icons.md: gemeinsame Sechseck-Kontur
+       in Amber, Innenzeichen in der Signalfarbe der Anwendung. Kein Hintergrund,
+       keine Verlaeufe, keine Schatten. -->
+  <title>WLED Ambilight</title>
+  <g fill="none" stroke-linecap="butt" stroke-linejoin="miter">
+    <path d="M 256 29 L 451 151 L 451 361 L 256 483 L 61 361 L 61 151 Z" stroke="#F2A63B" stroke-width="28"/>
+    <g stroke="#D9614A" stroke-width="44" fill="none">
+      <rect x="152" y="150" width="208" height="150" stroke-width="38"/>
+      <path d="M 152 352 H 360"/>
+    </g>
+  </g>
+</svg>

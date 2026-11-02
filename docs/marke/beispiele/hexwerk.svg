@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" version="1.1">
+  <!-- Hexwerk, Marken-Zeichen nach docs/marke/icons.md: gemeinsame Sechseck-Kontur
+       in Amber, Innenzeichen in der Signalfarbe der Anwendung. Kein Hintergrund,
+       keine Verlaeufe, keine Schatten. -->
+  <title>Hexwerk</title>
+  <g fill="none" stroke-linecap="butt" stroke-linejoin="miter">
+    <path d="M 256 29 L 451 151 L 451 361 L 256 483 L 61 361 L 61 151 Z" stroke="#F2A63B" stroke-width="28"/>
+    <g stroke="#86B26A" stroke-width="44" fill="none">
+      <path d="M 177 156 V 356 M 335 156 V 356 M 177 256 H 335"/>
+    </g>
+  </g>
+</svg>
