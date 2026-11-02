@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" version="1.1">
+  <!-- Hexwerk — Marken-Zeichen, Stil "Stempel": kraeftige Flaeche aus der Palette,
+       darauf eine Strichzeichnung in Knochenweiss, gleiche Strichstaerke fuer alle.
+       Eckige Kachel mit abgeschnittenen Ecken: kein Radius. Hex + Werk: Wabe und Haken. -->
+  <title>Hexwerk</title>
+  <path d="M 96 16 H 416 L 496 96 V 416 L 416 496 H 96 L 16 416 V 96 Z" fill="#4F7A2E"/>
+  <g fill="none" stroke="#E9E5DC" stroke-width="14" stroke-linecap="square" stroke-linejoin="miter">
+    <!-- Wabe als Grundriss, darin Zellen; unten rechts ein Haken: verwaltet. -->
+    <path d="M 256 96 L 384 170 V 318 L 256 392 L 128 318 V 170 Z" stroke-width="18"/>
+    <path d="M 256 156 L 318 192 V 264 L 256 300 L 194 264 V 192 Z"/>
+    <path d="M 256 216 L 288 234 V 270 L 256 288 L 224 270 V 234 Z" stroke-width="10"/>
+    <path d="M 330 330 L 352 352 L 396 296" stroke-width="20"/>
+  </g>
+</svg>

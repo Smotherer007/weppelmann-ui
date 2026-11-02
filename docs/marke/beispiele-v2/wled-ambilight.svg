@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" version="1.1">
+  <!-- WLED Ambilight — Marken-Zeichen, Stil "Stempel": kraeftige Flaeche aus der Palette,
+       darauf eine Strichzeichnung in Knochenweiss, gleiche Strichstaerke fuer alle.
+       Eckige Kachel mit abgeschnittenen Ecken: kein Radius. Bildschirm und Licht. -->
+  <title>WLED Ambilight</title>
+  <path d="M 96 16 H 416 L 496 96 V 416 L 416 496 H 96 L 16 416 V 96 Z" fill="#A8321E"/>
+  <g fill="none" stroke="#E9E5DC" stroke-width="14" stroke-linecap="square" stroke-linejoin="miter">
+    <!-- Bildschirm mit Licht, das nach aussen faellt: eine Farbe je Kante. -->
+    <rect x="150" y="150" width="212" height="150" stroke-width="18"/>
+    <path d="M 150 372 H 362" stroke-width="18"/>
+    <path d="M 186 118 V 86 M 256 110 V 70 M 326 118 V 86" stroke-width="14"/>
+    <path d="M 246 300 V 348 M 266 300 V 348" stroke-width="10"/>
+  </g>
+</svg>

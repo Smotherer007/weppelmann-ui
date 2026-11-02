@@ -10,41 +10,40 @@ Die drei vorhandenen Zeichen hatten nichts gemeinsam: Hexwerk war ein grünes
 Sechseck mit H auf transparentem Grund, WLED Ambilight eine abgerundete Kachel
 mit Verläufen, Farbglühen und Schatten, Crosspoint eine Kachel mit einem
 Balkendiagramm samt Achsen, Zahlen und Legende. Drei Grundformen, drei
-Detailgrad, keine gemeinsame Farbe.
+Detailgrade, keine gemeinsame Farbe.
 
-## Regeln
+Ein erster Versuch („gleicher Rahmen, anderes Strichsymbol", siehe
+`beispiele/`) war zu dünn: eckig, sauber, aber ohne Eigenleben — es sah nach
+Piktogramm aus, nicht nach Marke. Was Wiedererkennung erzeugt, ist nicht der
+Rahmen, sondern die **Handschrift**: gleiche Fläche, gleiche Strichsprache,
+gleicher Detailgrad. Wie bei einer Serie Zeichnungen aus einem Skizzenbuch.
 
-1. **Zeichen, keine Kachel.** Kein Hintergrund, kein Verlauf, kein Schatten,
-   keine Fase. Das Zeichen steht auf dem Untergrund, den der Desktop vorgibt —
-   es muss auf hellen wie auf dunklen Leisten funktionieren.
-2. **Eine gemeinsame Kontur.** Alle Zeichen sitzen in derselben Sechseck-Kontur.
-   Das ist die Marke: gleicher Rahmen, gleiche Strichstärke, gleicher Rand.
-3. **Ein Zeichen im Inneren, höchstens drei Striche.** Buchstabe oder Sinnbild,
-   das die Aufgabe in einem Wort sagt. Keine Diagramme, keine Achsen, keine
-   Zahlen, keine Legenden — das ist bei 16 px ohnehin nicht lesbar.
-4. **Zwei Farben.** Kontur in Amber `#F2A63B` (die Markenfarbe). Innenzeichen in
-   einer Signalfarbe der Palette — eine je Anwendung.
-5. **Maße.** Raster 512 × 512, Kontur-Rand 29 px (5,7 %), Strichstärke Kontur
-   28, Innenzeichen 44. Strich-Enden eckig (`butt`/`miter`) — die Oberflächen
-   der Bibliotheken sind auch eckig.
-6. **Was klein noch trägt.** Bei 16 und 24 px bleibt Kontur plus **eine** Form
-   übrig; das Innenzeichen wird dann gefüllt gezeichnet, nicht gestrichelt.
-   Gemessen: bei 16 px verschmolzen Bildschirm und Leiste von WLED Ambilight zu
-   einem Fleck — zwei Formen auf 16 px sind eine zu viel. Das Innenzeichen wird
-   für diese Größe vereinfacht (nur der Bildschirm, Strichstärke 52).
-7. **Symbolstil.** Für Leisten und Fenstertitel: dieselbe Form, gefüllt, in
-   `currentColor`. Gefüllt, weil Umfärbung mit Füllungen arbeitet (bei Hexwerk
-   hat sich gezeigt: ein gestrichenes Zeichen wird beim Umfärben zum Block).
+## Stil „Stempel"
 
-## Farbzuordnung
+1. **Fläche.** Eckige Kachel mit abgeschnittenen Ecken (Chamfer 80 auf 512),
+   vollflächig in einer kräftigen Farbe aus der Palette. Kein Radius, kein
+   Verlauf, kein Schatten.
+2. **Zeichnung.** Darauf eine Strichzeichnung in Knochenweiß `#E9E5DC`, gleiche
+   Strichstärke, gleiche Ecken (`butt`/`miter`). Zwei Strichstärken pro Zeichen
+   reichen: 18 für die Hauptform, 10–14 für Binnenlinien.
+3. **Motiv.** Ein Gegenstand, kein Piktogramm. Er füllt das Feld (Rand ~15 %),
+   darf über die Mitte hinausgehen. Das Motiv sagt die Aufgabe, nicht den
+   Produktnamen: Wabe für Verwaltung, Bildschirm mit Licht für Ambilight, zwei
+   gekreuzte Stecker für Crosspoint.
+4. **Farbzuordnung** — eine kräftige Fläche je Anwendung, Rest der Zeichnung
+   immer Knochenweiß:
 
-| Anwendung | Kontur | Innenzeichen | Warum |
-|---|---|---|---|
-| Hexwerk | `#F2A63B` | `#86B26A` | Grün steht für „verwaltet, in Ordnung" |
-| WLED Ambilight | `#F2A63B` | `#D9614A` | Rot ist die Farbe des Lichts am Rand |
-| Crosspoint | `#F2A63B` | `#E9E5DC` | Neutral, weil Audio keine Signalfarbe hat |
+   | Anwendung | Fläche | Motiv |
+   |---|---|---|
+   | Hexwerk | `#4F7A2E` | Wabe, drei Zellen, Haken („verwaltet") |
+   | WLED Ambilight | `#A8321E` | Bildschirm, Licht fällt nach außen |
+   | Crosspoint | `#C9862C` | zwei Klinkenstecker, die sich kreuzen |
 
-Alle Werte stammen aus `packages/tokens/src/primitives.tokens.json`.
+5. **Kleine Größen.** Bei 16 und 24 px bleibt eine Form plus ein Detail; die
+   Binnenlinien entfallen. Gemessen: zwei gleich gewichtete Formen auf 16 px
+   verschmelzen zu einem Fleck.
+6. **Symbolstil** (Leisten, Fenstertitel): dieselbe Form, gefüllt, `currentColor`,
+   ohne Fläche.
 
 ## Ablage je Anwendung
 
@@ -56,7 +55,11 @@ data/icons/hicolor/…/apps/*.png Linux-Installation
 data/icons/symbolic/…/*.svg     Symbolstil, currentColor
 ```
 
-## Beispiel
+## Beispiele
 
-`beispiele/` enthält die drei Zeichen in diesem Stil als SVG. Sie sind Vorschlag,
-nicht Beschluss: Kontur und Maße stehen, die Innenzeichen sind austauschbar.
+- `beispiele-v2/` — der Stil „Stempel", drei Zeichen, maßstäblich
+- `beispiele/` — verworfener erster Versuch (gemeinsame Kontur, Strichsymbol),
+  bleibt als Vergleich liegen
+
+Die Motive sind Vorschlag, nicht Beschluss. Fläche, Strichsprache und Detailgrad
+stehen; gezeichnet wird je Anwendung.
