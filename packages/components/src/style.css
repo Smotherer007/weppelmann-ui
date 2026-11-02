@@ -12,9 +12,12 @@ label { cursor: pointer; }
 button:disabled, input:disabled, select:disabled, textarea:disabled,
 [aria-disabled="true"], [aria-disabled="true"] * { cursor: not-allowed; }
 
-/* Text schreibt man mit der Schreibmarke, nicht mit der Hand. */
-input[type="text"], input[type="search"], input[type="number"], input[type="password"],
-input[type="email"], input[type="url"], input[type="tel"], textarea { cursor: text; }
+/* Text schreibt man mit der Schreibmarke, nicht mit der Hand.
+   `input:not([type])` gehoert dazu: ein <input> ohne type ist ein Textfeld, und
+   genau so rendert WpInput ihn. Ohne diesen Selektor blieb dort der Pfeil. */
+input:not([type]), input[type="text"], input[type="search"], input[type="number"],
+input[type="password"], input[type="email"], input[type="url"], input[type="tel"],
+textarea { cursor: text; }
 /* Gemeinsame Grundlage: nur Tokens, kein Literal. */
 .wp-root {
   background: var(--wp-color-bg-canvas);

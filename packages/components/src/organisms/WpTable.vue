@@ -104,6 +104,12 @@ function toggleSort(key: string, sortable?: boolean, currentKey?: string, curren
 .wp-table__sort.is-active { color: var(--wp-color-text-default); }
 .wp-table__arrow { color: var(--wp-color-accent-default); }
 .wp-table__arrow.is-idle { color: var(--wp-color-text-faint); opacity: 0.6; }
+/* Zeilen, die auf Doppelklick oder Enter etwas ausloesen, sind bedienbar und
+   zeigen das auch. Ohne tabindex sind es reine Anzeigezeilen. */
+.wp-table tbody tr[tabindex] { cursor: pointer; }
+.wp-table tbody tr[tabindex]:hover { background: var(--wp-color-bg-hover); }
+.wp-table tbody tr[tabindex]:focus-visible { outline: var(--wp-size-focus) solid var(--wp-color-focus-ring); outline-offset: -2px; }
+
 .wp-table__state { padding: var(--wp-space-5) var(--wp-space-2); text-align: center; color: var(--wp-color-text-faint); }
 .wp-table__error { color: var(--wp-color-status-error); }
 </style>
