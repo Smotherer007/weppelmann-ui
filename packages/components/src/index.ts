@@ -33,6 +33,12 @@ export { default as WpDialog } from "./organisms/WpDialog.vue";
 export { default as WpMenu } from "./organisms/WpMenu.vue";
 export { default as WpCard } from "./organisms/WpCard.vue";
 export { default as WpToolbar } from "./organisms/WpToolbar.vue";
+export { default as WpAppBar } from "./organisms/WpAppBar.vue";
+export { default as WpSidePanel } from "./organisms/WpSidePanel.vue";
+export { default as WpInspector } from "./organisms/WpInspector.vue";
+export { default as WpColorStrip } from "./organisms/WpColorStrip.vue";
+export { default as WpTelemetryBar } from "./organisms/WpTelemetryBar.vue";
+
 
 // ----------------------------------------------------------------- Typen
 export type { ListOption, Tab, MenuItem, Column, TableState, SortDirection } from "./types";
