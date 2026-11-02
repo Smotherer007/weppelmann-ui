@@ -34,6 +34,9 @@ Ein Satz, was diese Software für wen tut. (Beim Kopieren ersetzen.)
    Umgebung, Beispiel in `.env.example`.
 10. **Plattformneutral.** Kein `cfg(target_os)` und keine Pfadannahmen im Frontend.
     Unterschiede kommen als Daten (`platform` im Modell → `data-platform` am Root).
+11. **Icons entstehen aus Text.** Jedes App-Zeichen liegt als ASCII-Raster
+    (`assets/<app>.pm`) im Projekt und wird von `apps/markenwerk` erzeugt — nicht
+    als fertiges PNG abgelegt, nicht von Hand nachgezeichnet. Siehe §9.
     Tastenkürzel über `Mod`, nie fest `Ctrl`. Siehe PLAN.md §10.
 
 ## 3. Struktur
@@ -96,7 +99,37 @@ Gerät, PipeWire oder eine WoW-Installation braucht, hat die Grenze falsch gezog
 - `docs/adr/NNNN-titel.md`: getroffene Entscheidung, Alternativen, Kosten.
 - Screenshots werden **erzeugt** (Playwright), nicht von Hand abgelegt.
 
-## 8. Projektspezifisch
+## 8. Marke und Icons
+
+Der Stil steht in `docs/marke/icons.md`; hier nur die Regeln, an die sich Code hält.
+
+1. **Quelle ist das Raster.** `assets/<name>.pm`: Kopf (`name`, `surface`, `ink`,
+   optional `shade`), dann `---`, dann das Raster. `.` Fläche, `#` Zeichnung,
+   `+` Schatten. Quadratisch, höchstens 64 Zeilen, 32 × 32 ist die gute Größe.
+2. **Kachelform: Achteck.** An jeder Ecke 22 % der Kante als 45-Grad-Fase. Das
+   macht der Generator (`inKachel`), nicht das Zeichen. `form = voll` schaltet es ab.
+3. **Zeichnung mit Abstand.** Mindestens ein Pixel zur Kante, auch an der Fase —
+   sonst läuft eine Grundlinie in die abgeschnittene Ecke und das sieht man erst
+   bei 32 px.
+4. **Zwei Strichstärken.** 2 px für die Form, 1–2 px für Binnenlinien. Kein Zeichen
+   mit 1 px, während die anderen 2 px haben — nebeneinander fällt es auf.
+5. **Zwei Farben.** Fläche je Anwendung (`#4F7A2E` hexwerk, `#A8321E` wled,
+   `#C9862C` crosspoint), Zeichnung immer `#E9E5DC`. Werte aus `primitives.tokens.json`.
+6. **Erzeugen, nicht ablegen:**
+
+   ```
+   cd apps/markenwerk
+   node src/cli.ts check           # Raster gültig?
+   node src/cli.ts render <app>    # SVG, PNG 16–1024, Tray, Symbolic
+   ```
+
+   Danach die erzeugten Dateien ins Projekt kopieren: `icon.svg`, `icon-<n>.png`,
+   `symbolic.svg`, für Tauri zusätzlich `tray-<n>.rgba`, `app-64.rgba`, `app.ico`.
+7. **Nachweis bei Änderungen:** frischer Lauf nur aus der `.pm` in einem leeren
+   Verzeichnis, `sha256sum` gegen die Dateien im Projekt. Weichen sie ab, ist die
+   Quelle nicht die Wahrheit — dann stimmt etwas nicht.
+
+## 9. Projektspezifisch
 
 - Name, Zweck, Zielgruppe:
 - Abweichende Befehle:

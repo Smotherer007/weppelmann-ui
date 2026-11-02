@@ -17,7 +17,13 @@ withDefaults(
   }>(),
   { sortDirection: "asc" },
 );
-const emit = defineEmits<{ sort: [key: string, direction: SortDirection] }>();
+const emit = defineEmits<{
+  sort: [key: string, direction: SortDirection];
+  /** Einfacher Klick auf eine Zeile. */
+  "row-click": [index: number];
+  /** Doppelklick oder Enter auf einer Zeile — die Handlung, die es sonst nur per Knopf gäbe. */
+  "row-activate": [index: number];
+}>();
 
 function toggleSort(key: string, sortable?: boolean, currentKey?: string, currentDir?: SortDirection) {
   if (!sortable) return;
@@ -56,7 +62,10 @@ function toggleSort(key: string, sortable?: boolean, currentKey?: string, curren
         </tr>
       </thead>
       <tbody v-if="state.kind === 'fertig' && state.rows.length > 0">
-        <tr v-for="(row, i) in state.rows" :key="i">
+        <tr v-for="(row, i) in state.rows" :key="i" tabindex="0"
+            @click="emit('row-click', i)"
+            @dblclick="emit('row-activate', i)"
+            @keydown.enter="emit('row-activate', i)">
           <td v-for="col in columns" :key="col.key" :style="{ textAlign: col.align ?? 'start' }">
             {{ row[col.key] }}
           </td>
