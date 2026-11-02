@@ -45,3 +45,9 @@ export { default as WpTelemetryBar } from "./organisms/WpTelemetryBar.vue";
 
 // ----------------------------------------------------------------- Typen
 export type { ListOption, Tab, MenuItem, Column, TableState, SortDirection } from "./types";
+export { default as WpNavList } from "./organisms/WpNavList.vue";
+export { default as WpChoiceCard } from "./molecules/WpChoiceCard.vue";
+export { default as WpFactList } from "./molecules/WpFactList.vue";
+export { default as WpStatusBar } from "./organisms/WpStatusBar.vue";
+export { default as WpFieldset } from "./molecules/WpFieldset.vue";
+export { default as WpSectionLabel } from "./atoms/WpSectionLabel.vue";

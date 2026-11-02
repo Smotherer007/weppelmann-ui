@@ -89,6 +89,25 @@ const checked = ref(false);
         </p>
       </div>
 
+      <div class="cell">
+        <p class="cell__label">WpSectionLabel — Marke im Text, keine Überschrift</p>
+        <UI.WpSectionLabel label="Quellen" />
+        <UI.WpText>Darunter steht der Inhalt des Abschnitts.</UI.WpText>
+        <UI.WpSectionLabel label="Installiert" />
+        <UI.WpText tone="muted">Großbuchstaben, gesperrt, blass; role="heading" mit aria-level.</UI.WpText>
+      </div>
+
+      <div class="cell">
+        <p class="cell__label">WpCheckbox — gezeichnet, nicht nativ</p>
+        <UI.WpCheckbox :model-value="true" label="Angekreuzt" />
+        <UI.WpCheckbox :model-value="false" label="Leer" />
+        <UI.WpCheckbox :model-value="true" label="Gesperrt" state="disabled" />
+        <p class="cell__hint">
+          accent-color färbt nur in Chromium; in WebKitGTK blieb das Kästchen weiß.
+          Deshalb SVG-Haken auf eigener Fläche, der echte Input bleibt versteckt.
+        </p>
+      </div>
+
     </div>
   </section>
 </template>

@@ -12,6 +12,13 @@ const tab = ref("geraete");
 const sprache = ref("de");
 const schema = ref("dark");
 const ansicht = ref("karten");
+const letzteWahl = ref("");
+const fakten = [
+  { key: "Autor", value: "Prayos" },
+  { key: "Kategorie", value: "Combat" },
+  { key: "Interface", value: "11400, 20502", mono: true },
+  { key: "Homepage", value: "https://www.curseforge.com/wow/addons/classic-threat" },
+];
 const sprachen = [
   { value: "de", label: "Deutsch" },
   { value: "en", label: "English" },
@@ -147,6 +154,34 @@ const tabs = [
           <template #action><UI.WpButton label="Netzwerk durchsuchen" :icon="IconSearch" variant="primary" /></template>
         </UI.WpEmptyState>
       </div>
+      <div class="cell">
+        <p class="cell__label">WpChoiceCard — gewählte Zeile in Liste oder Raster</p>
+        <UI.WpChoiceCard title="World of Warcraft" meta="battlenet · 2 Ordner" note="~/.local/share/…"
+                         :active="true" />
+        <UI.WpChoiceCard title="Classic Threat" meta="Prayos · CurseForge" note="Bedrohung für mehrere Ziele"
+                         @press="letzteWahl = 'Classic Threat'" />
+        <UI.WpChoiceCard title="Gesperrt" meta="nicht verfügbar" :disabled="true" />
+        <p class="cell__hint">Eine Zeile: Name, Nebenzeit, Hinweis. Rechts Platz für Badges.</p>
+      </div>
+
+      <div class="cell">
+        <p class="cell__label">WpFactList — Beschriftung und Wert</p>
+        <UI.WpFactList :facts="fakten" />
+        <p class="cell__hint">
+          Als Liste (dl), nicht als Tabelle: Eigenschaften eines Gegenstands,
+          keine Datenzeilen. Werte lassen sich über einen Slot ersetzen.
+        </p>
+      </div>
+
+      <div class="cell">
+        <p class="cell__label">WpFieldset — Gruppe von Kästchen</p>
+        <UI.WpFieldset title="Quellen" hint="Mehrere gleichzeitig möglich.">
+          <UI.WpCheckbox :model-value="true" label="CurseForge (22390)" />
+          <UI.WpCheckbox :model-value="true" label="WoWInterface (7672)" />
+          <UI.WpCheckbox :model-value="false" label="wago (0)" />
+        </UI.WpFieldset>
+      </div>
+
     </div>
   </section>
 </template>

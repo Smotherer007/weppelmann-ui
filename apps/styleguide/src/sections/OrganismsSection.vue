@@ -3,7 +3,15 @@
 import { ref } from "vue";
 import * as UI from "@weppelmann/components";
 import type { Column, TableState } from "@weppelmann/components";
-import { IconChevronDown, IconWifi } from "@weppelmann/icons";
+import { IconChevronDown, IconFolder, IconPlug, IconSearch, IconSettings, IconWifi } from "@weppelmann/icons";
+
+const navAktiv = ref("clients");
+const navEintraege = [
+  { id: "clients", label: "Clients", icon: IconPlug, count: "1" },
+  { id: "installiert", label: "Installiert", icon: IconFolder, count: "2" },
+  { id: "katalog", label: "Katalog", icon: IconSearch, count: "27695" },
+  { id: "einstellungen", label: "Einstellungen", icon: IconSettings },
+];
 
 const columns: Column[] = [
   { key: "name", label: "Addon", sortable: true },
@@ -155,6 +163,29 @@ const menuItems = [
                  tone="warn" confirm-label="In Papierkorb" @confirm="chosen = 'entfernt'">
       <UI.WpText variant="caption" tone="muted">Details! · 11.2.1 · 42 Dateien</UI.WpText>
     </UI.WpDialog>
+<div class="cell">
+        <p class="cell__label">WpNavList — Seitenleiste (Rail)</p>
+        <div class="navprobe">
+          <UI.WpNavList :entries="navEintraege" :model-value="navAktiv" title="ANSICHT"
+                        @update:model-value="navAktiv = $event" />
+        </div>
+        <div class="navprobe navprobe--schmal">
+          <UI.WpNavList :entries="navEintraege" :model-value="navAktiv" compact
+                        @update:model-value="navAktiv = $event" />
+        </div>
+        <p class="cell__hint">
+          Zeichen, Name, Zahl; aktiv an der Kante markiert. Kompakt bleiben nur die Zeichen.
+        </p>
+      </div>
+
+      <div class="cell">
+        <p class="cell__label">WpStatusBar — Fusszeile des Fensters</p>
+        <UI.WpStatusBar brand="HEXWERK" state="bereit · fertig" counts="KATALOG 27695 · ADDONS 2 · CLIENTS 1" />
+        <UI.WpStatusBar brand="WLED">
+          <template #lead><UI.WpSpinner size="sm" /><span>Katalog</span></template>
+        </UI.WpStatusBar>
+        <p class="cell__hint">Eine Zeile, feste Höhe; alles andere wird abgeschnitten.</p>
+      </div>
   </section>
 </template>
 
@@ -174,4 +205,7 @@ const menuItems = [
 .demo__name { font-family: var(--wp-font-family-mono); font-size: var(--wp-font-size-xs); color: var(--wp-color-text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .demo__row { display: grid; grid-template-columns: 120px 1fr; align-items: center; gap: var(--wp-space-2); }
 @media (max-width: 900px) { .split, .two { grid-template-columns: 1fr; } }
+.navprobe { padding: var(--wp-space-2); background: var(--wp-color-bg-panel);
+  border: var(--wp-size-border) solid var(--wp-color-border-subtle); max-width: 232px; }
+.navprobe--schmal { max-width: 58px; }
 </style>

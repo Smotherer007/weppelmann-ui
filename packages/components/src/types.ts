@@ -52,3 +52,19 @@ export interface Option {
   hint?: string;
   disabled?: boolean;
 }
+
+/** Ein Eintrag in einer Navigationsliste. */
+export interface NavEntry {
+  id: string;
+  label: string;
+  icon?: unknown;
+  count?: number | string;
+  disabled?: boolean;
+}
+
+/** Beschriftung und Wert. */
+export interface Fact {
+  key: string;
+  value?: string | null;
+  mono?: boolean;
+}
