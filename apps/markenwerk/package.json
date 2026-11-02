@@ -1,0 +1,17 @@
+{
+  "name": "@weppelmann/markenwerk",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Marken-Zeichen aus ASCII-Pixelmaps: SVG, PNG, Tray und Symbolstil in allen Groessen.",
+  "type": "module",
+  "bin": {
+    "markenwerk": "./src/cli.ts"
+  },
+  "scripts": {
+    "render": "node src/cli.ts render",
+    "sheet": "node src/cli.ts sheet",
+    "check": "node src/cli.ts check",
+    "test": "node --test test/"
+  },
+  "license": "GPL-3.0-or-later"
+}
