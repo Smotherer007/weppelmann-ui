@@ -47,14 +47,18 @@ function laeufe(marke: Marke): { x: number; y: number; breite: number; farbe: st
 export function svgQuelle(marke: Marke): string {
   const size = marke.pixels.length;
   const faktor = 512 / size;
-  const teile = laeufe(marke).map((l) =>
-    `<rect x="${l.x * faktor}" y="${l.y * faktor}" width="${l.breite * faktor}" height="${faktor}" fill="${l.farbe}"/>`);
+  const teile = laeufe(marke)
+    .filter((l) => inKachel(l.x, l.y, size))
+    .map((l) => `<rect x="${l.x * faktor}" y="${l.y * faktor}" width="${l.breite * faktor}" height="${faktor}" fill="${l.farbe}"/>`);
+  const ecke = Math.max(1, Math.round(size * 0.22)) * faktor;
+  const kante = 512;
+  const achteck = `M ${ecke} 0 H ${kante - ecke} L ${kante} ${ecke} V ${kante - ecke} L ${kante - ecke} ${kante} H ${ecke} L 0 ${kante - ecke} V ${ecke} Z`;
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" shape-rendering="crispEdges">
   <title>${marke.name}</title>
   <!-- Erzeugt von markenwerk aus marken/${marke.slug}.pm. Nicht von Hand ändern:
-       die Quelle ist das Raster, nicht dieses Bild. -->
-  <rect width="512" height="512" fill="${marke.surface}"/>
+       die Quelle ist das Raster, nicht dieses Bild. Kachelform: Achteck. -->
+  <path d="${achteck}" fill="${marke.surface}"/>
 ${teile.join("\n")}
 </svg>
 `;
@@ -72,6 +76,28 @@ ${teile.join("\n")}
   </g>
 </svg>
 `;
+}
+
+
+/**
+ * Gehört das Pixel zur Kachel? Die Kachel ist ein Achteck: an den vier Ecken
+ * ist ein Dreieck abgeschnitten, 45 Grad. Das ist die Markenform — in der
+ * Leiste erkennt man sie, bevor man das Motiv sieht.
+ */
+export function inKachel(x: number, y: number, size: number, form: "voll" | "achteck" = "achteck"): boolean {
+  if (form === "voll") return true;
+  const ecke = Math.max(1, Math.round(size * 0.22));
+  const vonLinks = x;
+  const vonRechts = size - 1 - x;
+  const vonOben = y;
+  const vonUnten = size - 1 - y;
+  // In jeder Ecke: ist der Abstand zur Ecke kleiner als zur Fase?
+  return !(
+    (vonLinks < ecke && vonOben < ecke && vonLinks + vonOben < ecke) ||
+    (vonRechts < ecke && vonOben < ecke && vonRechts + vonOben < ecke) ||
+    (vonLinks < ecke && vonUnten < ecke && vonLinks + vonUnten < ecke) ||
+    (vonRechts < ecke && vonUnten < ecke && vonRechts + vonUnten < ecke)
+  );
 }
 
 /**
@@ -92,7 +118,7 @@ function vergroessere(marke: Marke, ziel: number, mitFlaeche: boolean): Uint8Arr
       const zeichen = marke.pixels[qy][qx];
       const o = (y * ziel + x) * 4;
       if (zeichen === ".") {
-        if (mitFlaeche) { aus[o] = flaeche[0]; aus[o + 1] = flaeche[1]; aus[o + 2] = flaeche[2]; aus[o + 3] = 255; }
+        if (mitFlaeche && inKachel(qx, qy, size)) { aus[o] = flaeche[0]; aus[o + 1] = flaeche[1]; aus[o + 2] = flaeche[2]; aus[o + 3] = 255; }
       } else {
         const [r, g, b] = zeichen === "+" ? schatten : tinte;
         aus[o] = r; aus[o + 1] = g; aus[o + 2] = b; aus[o + 3] = 255;
@@ -143,7 +169,7 @@ function verkleinere(marke: Marke, ziel: number, mitFlaeche: boolean): Uint8Arra
       const o = (y * ziel + x) * 4;
       const istGesetzt = gesetzt * 2 > gesamt;
       if (!istGesetzt) {
-        if (mitFlaeche) { aus[o] = flaeche[0]; aus[o + 1] = flaeche[1]; aus[o + 2] = flaeche[2]; aus[o + 3] = 255; }
+        if (mitFlaeche && inKachel(x, y, ziel)) { aus[o] = flaeche[0]; aus[o + 1] = flaeche[1]; aus[o + 2] = flaeche[2]; aus[o + 3] = 255; }
         continue;
       }
       const [r, g, b] = schattenAnteil * 2 > gesetzt ? schatten : tinte;
