@@ -4,7 +4,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Marke, Raster } from "./format.ts";
-import { rasterisiere, rasterisiereZeichnung } from "./format.ts";
+import { rgba } from "./format.ts";
 import { kodierePng } from "./png.ts";
 
 /** Größen, die Linux, Windows und macOS abfragen. */
@@ -58,51 +58,88 @@ ${teile.join("\n")}
 `;
 }
 
-/** Nächstes Vielfaches: Pixel verdoppeln, ohne zu glätten. */
-function vergroessere(raster: Raster, ziel: number): Uint8Array {
-  const out = new Uint8Array(ziel * ziel * 4);
+/**
+ * Vergrößern: jeder Quellpixel wird zum Block. Keine Glättung — ein Pixelbild
+ * kennt keine Zwischentöne.
+ */
+function vergroessere(marke: Marke, ziel: number, mitFlaeche: boolean): Uint8Array {
+  const size = marke.pixels.length;
+  const aus = new Uint8Array(ziel * ziel * 4);
+  const flaeche = rgba(marke.surface);
+  const tinte = rgba(marke.ink);
+  const schatten = marke.shade ? rgba(marke.shade) : tinte;
+
   for (let y = 0; y < ziel; y++) {
     for (let x = 0; x < ziel; x++) {
-      const qx = Math.floor((x * raster.size) / ziel);
-      const qy = Math.floor((y * raster.size) / ziel);
-      const i = (qy * raster.size + qx) * 4;
+      const qx = Math.floor((x * size) / ziel);
+      const qy = Math.floor((y * size) / ziel);
+      const zeichen = marke.pixels[qy][qx];
       const o = (y * ziel + x) * 4;
-      out[o] = raster.rgba[i]; out[o + 1] = raster.rgba[i + 1];
-      out[o + 2] = raster.rgba[i + 2]; out[o + 3] = raster.rgba[i + 3];
+      if (zeichen === ".") {
+        if (mitFlaeche) { aus[o] = flaeche[0]; aus[o + 1] = flaeche[1]; aus[o + 2] = flaeche[2]; aus[o + 3] = 255; }
+      } else {
+        const [r, g, b] = zeichen === "+" ? schatten : tinte;
+        aus[o] = r; aus[o + 1] = g; aus[o + 2] = b; aus[o + 3] = 255;
+      }
     }
   }
-  return out;
+  return aus;
 }
 
 /**
- * Verkleinern mit Mehrheitsentscheid: ein Zielpixel wird gesetzt, wenn die
- * Mehrheit seiner Quellpixel gesetzt ist. Einfaches Weglassen würde bei 16 px
- * ganze Striche verschlucken.
+ * Verkleinern mit Mehrheitsentscheid.
+ *
+ * Für jedes Zielpixel wird gezählt, wie viele Quellpixel gesetzt sind; die
+ * Mehrheit gewinnt. Gemittelt wird **nicht**: ein Mittelwert aus Fläche und Tinte
+ * ergibt Zwischentöne, die es in einem Pixelbild nicht gibt — bei 16 px sieht das
+ * aus wie Schmutz. So bleiben höchstens die Farben der Marke im Bild.
  */
-function verkleinere(raster: Raster, ziel: number): Uint8Array {
-  const out = new Uint8Array(ziel * ziel * 4);
-  const kante = raster.size / ziel;
+function verkleinere(marke: Marke, ziel: number, mitFlaeche: boolean): Uint8Array {
+  const size = marke.pixels.length;
+  const aus = new Uint8Array(ziel * ziel * 4);
+  const flaeche = rgba(marke.surface);
+  const tinte = rgba(marke.ink);
+  const schatten = marke.shade ? rgba(marke.shade) : tinte;
+
+  // Der Quellbereich je Zielpixel wird über floor/ceil bestimmt, damit auch
+  // 32 nach 24 funktioniert (nicht ganzzahliges Verhältnis).
+  const bereich = (i: number) => {
+    const von = Math.floor((i * size) / ziel);
+    const bis = Math.max(von + 1, Math.ceil(((i + 1) * size) / ziel));
+    return [von, Math.min(bis, size)] as const;
+  };
+
   for (let y = 0; y < ziel; y++) {
     for (let x = 0; x < ziel; x++) {
-      let r = 0, g = 0, b = 0, a = 0, n = 0;
-      for (let dy = 0; dy < kante; dy++) {
-        for (let dx = 0; dx < kante; dx++) {
-          const sx = Math.floor(x * kante + dx), sy = Math.floor(y * kante + dy);
-          const i = (sy * raster.size + sx) * 4;
-          r += raster.rgba[i]; g += raster.rgba[i + 1]; b += raster.rgba[i + 2]; a += raster.rgba[i + 3];
-          n++;
+      const [x0, x1] = bereich(x);
+      const [y0, y1] = bereich(y);
+      let gesetzt = 0;
+      let schattenAnteil = 0;
+      let gesamt = 0;
+      for (let sy = y0; sy < y1; sy++) {
+        for (let sx = x0; sx < x1; sx++) {
+          const zeichen = marke.pixels[sy][sx];
+          if (zeichen !== ".") gesetzt++;
+          if (zeichen === "+") schattenAnteil++;
+          gesamt++;
         }
       }
       const o = (y * ziel + x) * 4;
-      out[o] = Math.round(r / n); out[o + 1] = Math.round(g / n);
-      out[o + 2] = Math.round(b / n); out[o + 3] = Math.round(a / n);
+      const istGesetzt = gesetzt * 2 > gesamt;
+      if (!istGesetzt) {
+        if (mitFlaeche) { aus[o] = flaeche[0]; aus[o + 1] = flaeche[1]; aus[o + 2] = flaeche[2]; aus[o + 3] = 255; }
+        continue;
+      }
+      const [r, g, b] = schattenAnteil * 2 > gesetzt ? schatten : tinte;
+      aus[o] = r; aus[o + 1] = g; aus[o + 2] = b; aus[o + 3] = 255;
     }
   }
-  return out;
+  return aus;
 }
 
-function skaliere(raster: Raster, ziel: number): Uint8Array {
-  return ziel >= raster.size ? vergroessere(raster, ziel) : verkleinere(raster, ziel);
+/** Für Tests und Werkzeuge: ein Raster auf eine Zielgröße bringen. */
+export function skaliere(marke: Marke, ziel: number, mitFlaeche: boolean): Uint8Array {
+  return ziel >= marke.pixels.length ? vergroessere(marke, ziel, mitFlaeche) : verkleinere(marke, ziel, mitFlaeche);
 }
 
 /** Schreibt alle Dateien einer Marke in ein Verzeichnis. */
@@ -118,18 +155,16 @@ export function schreibeMarke(marke: Marke, ziel: string): string[] {
   writeFileSync(symbol, svgSymbol(marke));
   geschrieben.push(symbol);
 
-  const voll = rasterisiere(marke);
   for (const groesse of GROESSEN) {
     const pfad = join(ziel, `icon-${groesse}.png`);
-    writeFileSync(pfad, kodierePng(groesse, skaliere(voll, groesse)));
+    writeFileSync(pfad, kodierePng(groesse, skaliere(marke, groesse, true)));
     geschrieben.push(pfad);
   }
 
   // Tray: nur die Zeichnung, weiß, Rest durchsichtig. Leisten färben selbst.
-  const zeichnung = rasterisiereZeichnung(marke);
   for (const groesse of [32, 64]) {
     const pfad = join(ziel, `tray-${groesse}.png`);
-    writeFileSync(pfad, kodierePng(groesse, skaliere(zeichnung, groesse)));
+    writeFileSync(pfad, kodierePng(groesse, skaliere(marke, groesse, false)));
     geschrieben.push(pfad);
   }
 
