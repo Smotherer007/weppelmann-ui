@@ -10,3 +10,17 @@
   outline: var(--wp-size-focus) solid var(--wp-color-focus-ring);
   outline-offset: 2px;
 }
+
+/* Scrollbalken: schmal und in den Farben der App. WebKit braucht die
+   ::-webkit-Regeln, Firefox und andere die Standard-Eigenschaften.
+   Gehoert hierher, weil jede App denselben Balken zeigen soll. */
+* { scrollbar-width: thin; scrollbar-color: var(--wp-color-border-strong) transparent; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--wp-color-border-strong);
+  border: 2px solid var(--wp-color-bg-panel);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--wp-color-text-faint); }
+::-webkit-scrollbar-corner { background: transparent; }
