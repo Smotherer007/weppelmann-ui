@@ -25,6 +25,7 @@ export { default as WpSelect } from "./molecules/WpSelect.vue";
 export { default as WpMultiselect } from "./molecules/WpMultiselect.vue";
 export { default as WpCombobox } from "./molecules/WpCombobox.vue";
 export { default as WpRadioGroup } from "./molecules/WpRadioGroup.vue";
+export { default as WpToggleGroup } from "./molecules/WpToggleGroup.vue";
 export { default as WpTabs } from "./molecules/WpTabs.vue";
 export { default as WpToast } from "./molecules/WpToast.vue";
 export { default as WpEmptyState } from "./molecules/WpEmptyState.vue";

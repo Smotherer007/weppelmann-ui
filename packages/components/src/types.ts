@@ -44,3 +44,11 @@ export type TableState =
   | { kind: "fehler"; message: string };
 
 export type SortDirection = "asc" | "desc";
+
+/** Eine Auswahl in einem Umschalter, Radio oder Menü. */
+export interface Option {
+  value: string;
+  label: string;
+  hint?: string;
+  disabled?: boolean;
+}

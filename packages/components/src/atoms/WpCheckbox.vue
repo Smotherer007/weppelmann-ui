@@ -53,14 +53,14 @@ const checked = () => props.modelValue;
   display: inline-flex; align-items: center; justify-content: center;
   background: var(--wp-color-bg-input);
   border: var(--wp-size-border) solid var(--wp-color-border-strong);
-  color: var(--wp-color-bg-canvas);
+  color: var(--wp-color-text-on-accent);
 }
 .wp-check__box.is-on {
   background: var(--wp-color-accent-default);
   border-color: var(--wp-color-accent-default);
 }
-.wp-check__haken { color: var(--wp-color-bg-canvas); }
-.wp-check__strich { width: 8px; height: 2px; background: var(--wp-color-bg-canvas); }
+.wp-check__haken { color: var(--wp-color-text-on-accent); }
+.wp-check__strich { width: 8px; height: 2px; background: var(--wp-color-text-on-accent); }
 .wp-check__label { font-size: var(--wp-font-size-md); }
 .wp-check__input:focus-visible + .wp-check__box {
   outline: var(--wp-size-focus) solid var(--wp-color-focus-ring);

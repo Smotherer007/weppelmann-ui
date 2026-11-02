@@ -9,15 +9,35 @@ const picks = ref<string[]>(["wled", "govee"]);
 const search = ref<string | null>(null);
 const mode = ref("smooth");
 const tab = ref("geraete");
+const sprache = ref("de");
+const schema = ref("dark");
+const ansicht = ref("karten");
+const sprachen = [
+  { value: "de", label: "Deutsch" },
+  { value: "en", label: "English" },
+  { value: "es", label: "Español" },
+  { value: "fr", label: "Français" },
+];
+const schemas = [
+  { value: "dark", label: "Dunkel" },
+  { value: "light", label: "Hell" },
+  { value: "mono", label: "Mono" },
+];
+const ansichten = [
+  { value: "karten", label: "Karten" },
+  { value: "liste", label: "Liste" },
+  { value: "tabelle", label: "Tabelle" },
+];
 // Ein echtes Bild statt Platzhalter: das graue Kästchen ist die Flaeche, die
 // jeder Zustand gleich gross haelt.
 const bild =
   "data:image/svg+xml;utf8," +
   encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180">' +
-    '<rect width="320" height="180" fill="#131A22"/>' +
-    '<rect x="24" y="96" width="272" height="8" fill="#1F2831"/>' +
-    '<rect x="24" y="112" width="180" height="8" fill="#1F2831"/>' +
-    '<circle cx="64" cy="56" r="22" fill="#F2A63B"/>' +
+    '<rect width="320" height="180" fill="#1F2831"/>' +
+    '<rect x="24" y="96" width="272" height="8" fill="#2E3A46"/>' +
+    '<rect x="24" y="112" width="180" height="8" fill="#2E3A46"/>' +
+    '<circle cx="64" cy="56" r="22" fill="#4F7A2E"/>' +
+    '<path d="M42 56 H86" stroke="#E9E5DC" stroke-width="4"/>' +
     '<rect x="104" y="40" width="160" height="10" fill="#E9E5DC"/>' +
     '<rect x="104" y="58" width="110" height="8" fill="#98A3AF"/></svg>');
 const name = ref("Wohnzimmer");
@@ -95,6 +115,17 @@ const tabs = [
         <UI.WpToast tone="ok" title="Gespeichert" description="Einstellungen liegen in ~/.config." />
         <UI.WpToast tone="warn" title="Gerät antwortet langsam" description="Letzte Antwort vor 3 s." />
         <UI.WpToast tone="error" title="Verbindung verloren" description="WLED 192.168.1.42." />
+      </div>
+
+      <div class="cell">
+        <p class="cell__label">WpToggleGroup — Umschaltknöpfe (gtk::ToggleButton)</p>
+        <UI.WpToggleGroup v-model="sprache" :options="sprachen" label="Sprache" />
+        <UI.WpToggleGroup v-model="schema" :options="schemas" label="Farbschema" size="sm" />
+        <UI.WpToggleGroup v-model="ansicht" :options="ansichten" label="Ansicht" block />
+        <p class="cell__hint">
+          Eine Auswahl, immer genau ein Wert; der gedrückte Knopf ist gefüllt.
+          Semantik als radiogroup mit aria-checked, damit „1 von 4" angesagt wird.
+        </p>
       </div>
 
       <div class="cell">
