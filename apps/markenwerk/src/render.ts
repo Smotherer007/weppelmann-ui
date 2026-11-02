@@ -14,19 +14,41 @@ function hexOhneRaute(hex: string): string {
   return hex.replace("#", "");
 }
 
-/** SVG mit einem Rechteck je Pixel, auf 512 skaliert. */
+/**
+ * Waagerechte Läufe statt einzelner Pixel: aus 205 Rechtecken werden rund 60.
+ * Das ist derselbe Anblick, aber eine kürzere Datei und weniger Arbeit beim
+ * Zeichnen — bei jedem Start der Anwendung.
+ */
+function laeufe(marke: Marke): { x: number; y: number; breite: number; farbe: string }[] {
+  const size = marke.pixels.length;
+  const aus: { x: number; y: number; breite: number; farbe: string }[] = [];
+  for (let y = 0; y < size; y++) {
+    let x = 0;
+    while (x < size) {
+      const zeichen = marke.pixels[y][x];
+      if (zeichen === ".") { x++; continue; }
+      const farbe = zeichen === "+" ? marke.shade ?? marke.ink : marke.ink;
+      let bis = x;
+      while (bis < size) {
+        const naechstes = marke.pixels[y][bis];
+        if (naechstes === ".") break;
+        const naechsteFarbe = naechstes === "+" ? marke.shade ?? marke.ink : marke.ink;
+        if (naechsteFarbe !== farbe) break;
+        bis++;
+      }
+      aus.push({ x, y, breite: bis - x, farbe });
+      x = bis;
+    }
+  }
+  return aus;
+}
+
+/** SVG mit einem Rechteck je Lauf, auf 512 skaliert. */
 export function svgQuelle(marke: Marke): string {
   const size = marke.pixels.length;
   const faktor = 512 / size;
-  const teile: string[] = [];
-  for (let y = 0; y < size; y++) {
-    for (let x = 0; x < size; x++) {
-      const c = marke.pixels[y][x];
-      if (c === ".") continue;
-      const farbe = c === "+" ? marke.shade ?? marke.ink : marke.ink;
-      teile.push(`<rect x="${x * faktor}" y="${y * faktor}" width="${faktor}" height="${faktor}" fill="${farbe}"/>`);
-    }
-  }
+  const teile = laeufe(marke).map((l) =>
+    `<rect x="${l.x * faktor}" y="${l.y * faktor}" width="${l.breite * faktor}" height="${faktor}" fill="${l.farbe}"/>`);
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" shape-rendering="crispEdges">
   <title>${marke.name}</title>
@@ -41,13 +63,7 @@ ${teile.join("\n")}
 /** Symbolstil: nur die Zeichnung, in currentColor — für Leisten und Titel. */
 export function svgSymbol(marke: Marke): string {
   const size = marke.pixels.length;
-  const teile: string[] = [];
-  for (let y = 0; y < size; y++) {
-    for (let x = 0; x < size; x++) {
-      if (marke.pixels[y][x] === ".") continue;
-      teile.push(`<rect x="${x}" y="${y}" width="1" height="1"/>`);
-    }
-  }
+  const teile = laeufe(marke).map((l) => `<rect x="${l.x}" y="${l.y}" width="${l.breite}" height="1"/>`);
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 ${size} ${size}" shape-rendering="crispEdges">
   <title>${marke.name}</title>
