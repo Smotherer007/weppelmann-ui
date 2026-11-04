@@ -103,6 +103,10 @@ function onKey(event: KeyboardEvent) {
   } else if (event.key === "Tab") close();
 }
 function onOutside(event: MouseEvent) {
+  // Nur die **linke** Maustaste schließt. Ein Rechtsklick öffnet ein
+  // Kontextmenü — würde er auch schließen, wäre das Menü sofort wieder zu
+  // (Ablauf: mousedown → contextmenu).
+  if (event.button !== 0) return;
   const ziel = event.target as Node;
   const drinnen =
     (root.value && root.value.contains(ziel)) || (liste.value && liste.value.contains(ziel));
