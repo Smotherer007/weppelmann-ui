@@ -2,22 +2,41 @@
 // Organismus: Menü hinter einem Auslöser. Ersetzt gtk::MenuButton + Popover.
 // Auf macOS erscheint später dieselbe Liste in der Menüleiste; die Komponente
 // entscheidet nichts über die Plattform, sie stellt dar, was übergeben wird.
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref } from "vue";
 import type { MenuItem } from "../types";
 
-const props = defineProps<{ items: MenuItem[]; label: string }>();
-const emit = defineEmits<{ select: [id: string] }>();
+const props = defineProps<{
+  items: MenuItem[];
+  label: string;
+  /**
+   * Gesteuertes Öffnen (`v-model:open`). Nötig für Kontextmenüs: dort öffnet
+   * nicht der Knopf, sondern ein Rechtsklick auf die Zeile. Ohne diese Angabe
+   * öffnet und schließt die Komponente selbst.
+   */
+  open?: boolean;
+  /** Ausrichtung der Liste; `left` für Menüs am linken Fensterrand. */
+  align?: "left" | "right";
+}>();
+const emit = defineEmits<{ select: [id: string]; "update:open": [boolean] }>();
 
 const root = ref<HTMLElement | null>(null);
-const open = ref(false);
+const eigen = ref(false);
 const active = ref(-1);
 
-function toggle() { open.value ? close() : openMenu(); }
+/** Offen? Entweder gesteuert von außen oder selbst entschieden. */
+const offen = computed(() => props.open ?? eigen.value);
+
+function setzeOffen(wert: boolean) {
+  eigen.value = wert;
+  emit("update:open", wert);
+}
+
+function toggle() { offen.value ? close() : openMenu(); }
 function openMenu() {
-  open.value = true;
+  setzeOffen(true);
   active.value = props.items.findIndex((i) => !i.disabled);
 }
-function close() { open.value = false; active.value = -1; }
+function close() { setzeOffen(false); active.value = -1; }
 function choose(id: string) {
   const item = props.items.find((i) => i.id === id);
   if (!item || item.disabled) return;
@@ -25,7 +44,7 @@ function choose(id: string) {
   close();
 }
 function onKey(event: KeyboardEvent) {
-  if (!open.value) {
+  if (!offen.value) {
     if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") { event.preventDefault(); openMenu(); }
     return;
   }
@@ -48,6 +67,7 @@ function onKey(event: KeyboardEvent) {
 function onOutside(event: MouseEvent) {
   if (root.value && !root.value.contains(event.target as Node)) close();
 }
+// Bei gesteuertem Öffnen (Kontextmenü) schließt auch ein Klick außerhalb.
 onMounted(() => document.addEventListener("mousedown", onOutside));
 onBeforeUnmount(() => document.removeEventListener("mousedown", onOutside));
 </script>
@@ -59,13 +79,19 @@ onBeforeUnmount(() => document.removeEventListener("mousedown", onOutside));
       class="wp-menu__trigger"
       :aria-label="label"
       aria-haspopup="menu"
-      :aria-expanded="open"
+      :aria-expanded="offen"
       @click="toggle"
       @keydown="onKey"
     >
       <slot />
     </button>
-    <ul v-if="open" class="wp-menu__list" role="menu" :aria-label="label">
+    <ul
+      v-if="offen"
+      class="wp-menu__list"
+      :class="`is-${align ?? 'right'}`"
+      role="menu"
+      :aria-label="label"
+    >
       <template v-for="(item, i) in items" :key="item.id">
         <li v-if="item.separatorBefore" class="wp-menu__sep" role="separator" />
         <li
@@ -90,10 +116,13 @@ onBeforeUnmount(() => document.removeEventListener("mousedown", onOutside));
 .wp-menu__trigger { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; display: inline-flex; }
 .wp-menu__trigger:focus-visible { outline: var(--wp-size-focus) solid var(--wp-color-focus-ring); outline-offset: 2px; }
 .wp-menu__list {
-  position: absolute; right: 0; top: calc(100% + 4px); z-index: 40; min-width: 200px;
+  position: absolute; top: calc(100% + 4px); z-index: 40; min-width: 220px;
   margin: 0; padding: 4px 0; list-style: none;
   background: var(--wp-color-bg-panel); border: var(--wp-size-border) solid var(--wp-color-border-strong);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 35%);
 }
+.wp-menu__list.is-right { right: 0; }
+.wp-menu__list.is-left { left: 0; }
 .wp-menu__item { display: flex; justify-content: space-between; gap: var(--wp-space-3); padding: 6px var(--wp-space-3); font-size: var(--wp-font-size-md); cursor: pointer; }
 .wp-menu__item.is-active { background: var(--wp-color-bg-hover); }
 .wp-menu__item.is-disabled { opacity: 0.45; cursor: default; }

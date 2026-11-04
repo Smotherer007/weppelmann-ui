@@ -15,6 +15,8 @@ export { default as WpProgress } from "./atoms/WpProgress.vue";
 export { default as WpDivider } from "./atoms/WpDivider.vue";
 export { default as WpStack } from "./atoms/WpStack.vue";
 export { default as WpSlider } from "./atoms/WpSlider.vue";
+export { default as WpLevelMeter } from "./atoms/WpLevelMeter.vue";
+export { default as WpAvatar } from "./atoms/WpAvatar.vue";
 export { default as WpIcon } from "./atoms/WpIcon.vue";
 
 // ------------------------------------------------------------- Moleküle

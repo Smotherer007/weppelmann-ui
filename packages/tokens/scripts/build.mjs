@@ -71,7 +71,11 @@ for (const theme of THEMES) {
 // Ohne diesen Block laufen var(--wp-space-2) und var(--wp-size-control-md) ins Leere
 // (CSS-Variablen ohne Deklaration sind ungültig, nicht "null") — der Fehler ist
 // unsichtbar, bis man die Abstände vermisst.
-const BASE_GROUPS = ["space", "font", "size", "duration"];
+// `radius` gehört hierher: die Bausteine benutzen `--wp-radius-md` und
+// `--wp-radius-pill`, die Primitive wurden aber nie ausgegeben. Eine
+// CSS-Variable ohne Deklaration ist ungültig — die Ecken waren also eckig, ohne
+// dass es jemand bemerkt hat.
+const BASE_GROUPS = ["space", "radius", "font", "size", "duration"];
 const base = Object.fromEntries(
   Object.entries(primitives)
     .filter(([path]) => BASE_GROUPS.includes(path.split(".")[0]))

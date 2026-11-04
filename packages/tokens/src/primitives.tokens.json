@@ -118,9 +118,20 @@
     }
   },
   "radius": {
-    "$type": "dimension",
     "none": {
       "$value": "0"
+    },
+    "sm": {
+      "$value": "4px"
+    },
+    "md": {
+      "$value": "6px"
+    },
+    "lg": {
+      "$value": "10px"
+    },
+    "pill": {
+      "$value": "999px"
     }
   },
   "font": {
