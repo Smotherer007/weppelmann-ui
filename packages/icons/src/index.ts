@@ -29,6 +29,7 @@ export {
   Unplug as IconUnplug,
   Mic as IconMic,
   MicOff as IconMicOff,
+  Volume2 as IconSpeaker,
   Headphones as IconHeadphones,
   HeadphoneOff as IconHeadphoneOff,
   Monitor as IconMonitor,
