@@ -3,7 +3,22 @@
 // Das Panel liefert die Seite über den Slot — die Reiterleiste kennt keine Inhalte.
 import type { Tab } from "../types";
 
-const props = defineProps<{ modelValue: string; tabs: Tab[]; label?: string }>();
+const props = defineProps<{
+  modelValue: string;
+  tabs: Tab[];
+  label?: string;
+  /**
+   * Nur die Reiter, kein Inhaltsbereich. Für Navigation in der Kopfzeile:
+   * dort steht die Leiste, der Inhalt kommt weiter unten in der Ansicht.
+   */
+  bare?: boolean;
+  /**
+   * `underline` = Reiter mit Unterstrich (Inhaltsbereiche).
+   * `segments` = gefüllte Segmente über die volle Höhe (Navigation in einer
+   * Kopfzeile). Kein Unterstrich, sondern Fläche und Akzentfarbe.
+   */
+  variant?: "underline" | "segments";
+}>();
 const emit = defineEmits<{ "update:modelValue": [id: string] }>();
 
 const base = `wp-tabs-${Math.random().toString(36).slice(2, 8)}`;
@@ -38,7 +53,7 @@ function onKey(event: KeyboardEvent) {
 </script>
 
 <template>
-  <div class="wp-tabs">
+  <div class="wp-tabs" :class="`is-${variant ?? 'underline'}`">
     <div class="wp-tabs__list" role="tablist" :aria-label="label">
       <button
         v-for="tab in tabs"
@@ -59,7 +74,13 @@ function onKey(event: KeyboardEvent) {
         <span v-if="tab.badge" class="wp-tabs__badge">{{ tab.badge }}</span>
       </button>
     </div>
-    <div :id="`${base}-panel`" class="wp-tabs__panel" role="tabpanel" :aria-labelledby="`${base}-tab-${modelValue}`">
+    <div
+      v-if="!bare"
+      :id="`${base}-panel`"
+      class="wp-tabs__panel"
+      role="tabpanel"
+      :aria-labelledby="`${base}-tab-${modelValue}`"
+    >
       <slot />
     </div>
   </div>
@@ -83,4 +104,24 @@ function onKey(event: KeyboardEvent) {
   font-size: var(--wp-font-size-xs); font-variant-numeric: tabular-nums;
 }
 .wp-tabs__panel { padding: var(--wp-space-4) 0; }
+
+/* Segmente: volle Höhe, Fläche statt Linie. Für Kopfzeilen. */
+.wp-tabs.is-segments { height: 100%; }
+.wp-tabs.is-segments .wp-tabs__list { height: 100%; gap: var(--wp-space-1); border-bottom: 0; align-items: stretch; }
+.wp-tabs.is-segments .wp-tabs__tab {
+  border-bottom: 0; border-radius: 0; height: 100%;
+  padding: 0 var(--wp-space-4);
+  font-size: var(--wp-font-size-md);
+  color: var(--wp-color-text-muted);
+}
+.wp-tabs.is-segments .wp-tabs__tab:hover:not(:disabled) {
+  background: var(--wp-color-bg-hover); color: var(--wp-color-text-default);
+}
+.wp-tabs.is-segments .wp-tabs__tab.is-active {
+  background: var(--wp-color-bg-raised);
+  color: var(--wp-color-text-default);
+  font-weight: var(--wp-font-weight-semibold);
+  /* Akzent als Kante links — dieselbe Sprache wie die aktive Zeile in Listen. */
+  box-shadow: inset 2px 0 0 0 var(--wp-color-accent-default);
+}
 </style>

@@ -122,16 +122,16 @@
       "$value": "0"
     },
     "sm": {
-      "$value": "4px"
+      "$value": "0"
     },
     "md": {
-      "$value": "6px"
+      "$value": "0"
     },
     "lg": {
-      "$value": "10px"
+      "$value": "0"
     },
     "pill": {
-      "$value": "999px"
+      "$value": "0"
     }
   },
   "font": {
