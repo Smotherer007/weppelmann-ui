@@ -26,6 +26,7 @@ export {
   Languages as IconLanguage,
   Lightbulb as IconLight,
   LoaderCircle as IconSpinner,
+  Unplug as IconUnplug,
   Mic as IconMic,
   MicOff as IconMicOff,
   Headphones as IconHeadphones,
