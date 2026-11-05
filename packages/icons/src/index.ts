@@ -7,6 +7,9 @@
 //
 // Neue Icons werden hier ergänzt, nie direkt in einer App importiert. Das hält die
 // Auswahl klein und den Stil einheitlich.
+// Eigene Zeichnung (nicht aus Lucide): Sprechblase mit Schwanz unten rechts.
+export { default as IconSprechblase } from "./Sprechblase.vue";
+
 export {
   ArrowDown as IconArrowDown,
   ArrowUp as IconArrowUp,
@@ -25,6 +28,8 @@ export {
   Info as IconInfo,
   Languages as IconLanguage,
   Lightbulb as IconLight,
+  Lock as IconLock,
+  LockOpen as IconLockOpen,
   LoaderCircle as IconSpinner,
   Unplug as IconUnplug,
   Mic as IconMic,
@@ -32,9 +37,11 @@ export {
   Volume2 as IconSpeaker,
   Headphones as IconHeadphones,
   HeadphoneOff as IconHeadphoneOff,
+  MessageSquare as IconChat,
   Monitor as IconMonitor,
   Moon as IconMoon,
   Palette as IconPalette,
+  PanelRight as IconPanelRight,
   Pause as IconPause,
   Play as IconPlay,
   Plug as IconPlug,
