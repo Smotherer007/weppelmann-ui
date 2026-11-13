@@ -6,8 +6,18 @@ import { IconClose, IconInfo, IconStatusError, IconStatusOk, IconWarning } from 
 import WpIcon from "../atoms/WpIcon.vue";
 
 type Tone = "info" | "ok" | "warn" | "error";
-withDefaults(defineProps<{ tone?: Tone; title: string; description?: string; dismissible?: boolean }>(),
-  { tone: "info", dismissible: true });
+// `closeLabel` ist übersetzbar: das Label steckt nicht mehr fest auf Deutsch im
+// Markup (sprechwerk liefert vier Sprachen, der Screenreader las dort „Schließen").
+withDefaults(
+  defineProps<{
+    tone?: Tone;
+    title: string;
+    description?: string;
+    dismissible?: boolean;
+    closeLabel?: string;
+  }>(),
+  { tone: "info", dismissible: true, closeLabel: "Schließen" },
+);
 defineEmits<{ close: [] }>();
 
 const icons: Record<Tone, Component> = {
@@ -26,7 +36,7 @@ const icons: Record<Tone, Component> = {
       <p v-if="description" class="wp-toast__desc">{{ description }}</p>
     </div>
     <slot />
-    <button v-if="dismissible" type="button" class="wp-toast__close" aria-label="Schließen" @click="$emit('close')">
+    <button v-if="dismissible" type="button" class="wp-toast__close" :aria-label="closeLabel" @click="$emit('close')">
       <WpIcon :icon="IconClose" size="sm" />
     </button>
   </div>

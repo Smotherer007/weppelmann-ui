@@ -31,6 +31,23 @@ textarea { cursor: text; }
   outline-offset: 2px;
 }
 
+/* Bewegung reduzieren: Wer im Betriebssystem „Bewegung reduzieren" gesetzt hat,
+   bekommt keine Übergänge und keine Endlos-Animationen. Ein Ort für alle
+   Komponenten und alle Apps, weil hier jede Animation hängt — die Dauer-Tokens
+   werden auf null gesetzt, und die wenigen fest eingetragenen Dauern
+   (Spinner, Toast, Nyan) werden überschrieben. */
+@media (prefers-reduced-motion: reduce) {
+  .wp-root,
+  .wp-root * {
+    --wp-duration-fast: 0s;
+    --wp-duration-normal: 0s;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Scrollbalken: schmal und in den Farben der App. WebKit braucht die
    ::-webkit-Regeln, Firefox und andere die Standard-Eigenschaften.
    Gehoert hierher, weil jede App denselben Balken zeigen soll. */

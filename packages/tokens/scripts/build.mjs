@@ -113,7 +113,11 @@ const header = `/* Erzeugt von packages/tokens/scripts/build.mjs — nicht von H
 const css = header + baseBlock + "\n\n" + cssBlocks.join("\n\n") + "\n";
 
 // JSON: für Styleguide, Werkzeuge und Vergleiche.
-const json = JSON.stringify({ version: 1, themes }, null, 2) + "\n";
+//
+// `base` (Maße, Schrift, Dauer) gehört mit hinein: bis 2026-11-13 standen im
+// JSON nur die Farben, deshalb konnte der Styleguide Abstände, Radien und
+// Dauern nicht zeigen — die Seite behauptete aber, die Maßquelle zu sein.
+const json = JSON.stringify({ version: 1, base, themes }, null, 2) + "\n";
 
 if (process.argv.includes("--check")) {
   // Prüfmodus für die CI: nur rechnen, nichts schreiben.

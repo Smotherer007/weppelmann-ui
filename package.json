@@ -10,8 +10,9 @@
   "scripts": {
     "build": "npm run -w @weppelmann/tokens build && npm run -w @weppelmann/styleguide build",
     "dev": "npm run -w @weppelmann/styleguide dev",
-    "test": "npm run -w @weppelmann/components test",
+    "test": "npm run -w @weppelmann/tokens test && npm run kontrast && npm run -w @weppelmann/styleguide typecheck",
     "tokens": "npm run -w @weppelmann/tokens build",
-    "lint": "npm run -w @weppelmann/components lint"
+    "lint": "npm run -w @weppelmann/components lint",
+    "kontrast": "node packages/tokens/scripts/kontrast.mjs"
   }
 }
