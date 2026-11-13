@@ -137,6 +137,33 @@ const checked = ref(false);
         </p>
       </div>
 
+      <div class="cell">
+        <p class="cell__label">WpAvatar — Initialen statt Bild</p>
+        <div class="reihe">
+          <UI.WpAvatar name="Anna Beispiel" />
+          <UI.WpAvatar name="Bert" size="sm" />
+          <UI.WpAvatar name="Cem" size="lg" tone="accent" :speaking="true" />
+          <UI.WpAvatar name="Dora" :muted="true" />
+          <UI.WpAvatar name="Emil" :away="true" />
+        </div>
+        <p class="cell__hint">
+          Ring = spricht gerade, Strich = stumm, blass = abwesend. Kein Upload,
+          keine Moderation: die Initialen genügen.
+        </p>
+      </div>
+
+      <div class="cell">
+        <p class="cell__label">WpLevelMeter — Pegel und Schwelle zugleich</p>
+        <UI.WpLevelMeter :level="12" :threshold="25" label="Pegel Anna" />
+        <UI.WpLevelMeter :level="48" :threshold="25" label="Pegel Bert" tone="ok" />
+        <UI.WpLevelMeter :level="82" :threshold="60" label="Pegel Cem" tone="warn" />
+        <UI.WpLevelMeter :level="30" :threshold="25" label="Pegel Dora" :bare="true" />
+        <p class="cell__hint">
+          Die Marke ist die Sprechschwelle: erst darüber wird gesendet. Ohne sie
+          wäre der Balken nur hübsch.
+        </p>
+      </div>
+
     </div>
   </section>
 </template>

@@ -19,7 +19,8 @@ Verbindlich: [PLAN.md](PLAN.md) und [AGENTS.md](AGENTS.md).
 
 ![Schaltflächen in allen Varianten und Zuständen](docs/screenshots/styleguide-components-light.png)
 
-Der Styleguide zeigt Farben **je Modus**, die Maße (Abstand, Radius, Größe,
+Der Styleguide zeigt **alle 44 Komponenten** (Atome, Moleküle, Organismen,
+Beispielseiten), Farben **je Modus**, die Maße (Abstand, Radius, Größe,
 Schrift, Dauer) mit Vorschau und die **Kontrastprüfung** aller verwendeten
 Farbpaare — mit Verhältnis und Stufe (AA/AAA), Verstöße rot.
 
