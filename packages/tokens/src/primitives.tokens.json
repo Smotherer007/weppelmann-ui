@@ -85,6 +85,19 @@
       "default": {
         "$value": "#86B26A"
       }
+    },
+    "marke": {
+      "sprechwerk": {
+        "surface": {
+          "$value": "#0E1319"
+        },
+        "ink": {
+          "$value": "#2EE6C8"
+        },
+        "shade": {
+          "$value": "#F7931E"
+        }
+      }
     }
   },
   "space": {

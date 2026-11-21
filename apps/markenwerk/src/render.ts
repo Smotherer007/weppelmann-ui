@@ -19,7 +19,7 @@ function hexOhneRaute(hex: string): string {
  * Das ist derselbe Anblick, aber eine kürzere Datei und weniger Arbeit beim
  * Zeichnen — bei jedem Start der Anwendung.
  */
-function laeufe(marke: Marke): { x: number; y: number; breite: number; farbe: string }[] {
+export function laeufe(marke: Marke): { x: number; y: number; breite: number; farbe: string }[] {
   const size = marke.pixels.length;
   const aus: { x: number; y: number; breite: number; farbe: string }[] = [];
   for (let y = 0; y < size; y++) {
@@ -43,6 +43,16 @@ function laeufe(marke: Marke): { x: number; y: number; breite: number; farbe: st
   return aus;
 }
 
+/**
+ * Achteck-Pfad der Kachel in einem Raster von `size` Einheiten — dieselbe Form,
+ * die `inKachel` prüft. Der Faktor skaliert auf die Ausgabegröße.
+ */
+export function kachelPfad(size: number, faktor = 1): string {
+  const ecke = Math.max(1, Math.round(size * 0.22)) * faktor;
+  const kante = size * faktor;
+  return `M ${ecke} 0 H ${kante - ecke} L ${kante} ${ecke} V ${kante - ecke} L ${kante - ecke} ${kante} H ${ecke} L 0 ${kante - ecke} V ${ecke} Z`;
+}
+
 /** SVG mit einem Rechteck je Lauf, auf 512 skaliert. */
 export function svgQuelle(marke: Marke): string {
   const size = marke.pixels.length;
@@ -50,9 +60,7 @@ export function svgQuelle(marke: Marke): string {
   const teile = laeufe(marke)
     .filter((l) => inKachel(l.x, l.y, size))
     .map((l) => `<rect x="${l.x * faktor}" y="${l.y * faktor}" width="${l.breite * faktor}" height="${faktor}" fill="${l.farbe}"/>`);
-  const ecke = Math.max(1, Math.round(size * 0.22)) * faktor;
-  const kante = 512;
-  const achteck = `M ${ecke} 0 H ${kante - ecke} L ${kante} ${ecke} V ${kante - ecke} L ${kante - ecke} ${kante} H ${ecke} L 0 ${kante - ecke} V ${ecke} Z`;
+  const achteck = kachelPfad(size, faktor);
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" shape-rendering="crispEdges">
   <title>${marke.name}</title>
