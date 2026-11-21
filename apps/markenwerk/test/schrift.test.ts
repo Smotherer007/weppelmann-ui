@@ -17,8 +17,8 @@ test("jede Glyphe ist rechteckig und nicht hoeher als das Raster", () => {
 test("setzt die Wortmarke in Laeufe", () => {
   const { flecken, breite } = wortmarke("SPRECHWERK");
   assert.ok(flecken.length > 40, `nur ${flecken.length} Rechtecke`);
-  // 9 Buchstaben zu 6 Spalten, das W mit 8, dazu 9 Fugen: 71
-  assert.equal(breite, 71);
+  // 9 Buchstaben zu 7 Spalten, das W mit 12, dazu 9 Fugen: 84
+  assert.equal(breite, 84);
   // Alle Flecken liegen im Raster.
   for (const f of flecken) {
     assert.ok(f.y >= 0 && f.y < HOEHE);
@@ -46,7 +46,7 @@ test("unbekannter Buchstabe ist ein Fehler", () => {
 
 test("Leerzeichen schiebt weiter, ohne Flecken", () => {
   const { flecken, breite } = wortmarke("S S");
-  // S (6) + Fuge (1) + Leerzeichen (2) + S (6)
-  assert.equal(breite, 15);
-  assert.ok(flecken.every((f) => f.x < 6 || f.x >= 8));
+  // S (7) + Fuge (1) + Leerzeichen (2) + S (7)
+  assert.equal(breite, 17);
+  assert.ok(flecken.every((f) => f.x < 7 || f.x >= 10));
 });

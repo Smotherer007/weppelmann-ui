@@ -57,7 +57,7 @@ gleicher Detailgrad. Wie bei einer Serie Zeichnungen aus einem Skizzenbuch.
 ## Wortmarke und Logo
 
 Neben dem Zeichen gibt es die Wortmarke: „SPRECHWERK" in Pixellettern
-(`apps/markenwerk/src/schrift.ts`, 6 × 8 Zellen, Strich 2 px). Ein SVG mit
+(`apps/markenwerk/src/schrift.ts`, 7 × 10 Zellen, Strich 2 px). Ein SVG mit
 `<text>` wäre billiger, sieht aber auf jedem Rechner anders aus — die Buchstaben
 sind deshalb Rechtecke wie das Zeichen.
 

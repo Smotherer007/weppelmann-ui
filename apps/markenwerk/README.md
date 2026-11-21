@@ -60,11 +60,13 @@ verschluckt 16 px ganze Striche. Vergrößert wird ohne Glättung.
 ## Wortmarke
 
 Das Logo setzt Zeichen und Wortmarke zusammen (`src/logo.ts`). Die Buchstaben
-stehen als Raster in `src/schrift.ts` — 6 × 8 Zellen, Strich 2 px, das W ist
-breiter. Ein SVG mit `<text>` wäre kürzer, hinge aber an einer Systemschrift;
-die Marke soll überall gleich aussehen. Vorhanden sind nur die Buchstaben, die
-die Wortmarke braucht (C E H K P R S W); ein fehlender Buchstabe bricht mit
-einer Meldung ab, statt still ein Fragezeichen zu setzen.
+stehen als Raster in `src/schrift.ts` — 7 × 10 Zellen, Strich 2 px, das W ist
+mit 12 Zellen breiter. Zehn Zeilen, weil der Strich dann ein Fünftel der Höhe
+ist; bei acht war er ein Viertel und die Buchstaben standen wie Kästchen da.
+Ein SVG mit `<text>` wäre kürzer, hinge aber an einer Systemschrift; die Marke
+soll überall gleich aussehen. Vorhanden sind nur die Buchstaben, die die
+Wortmarke braucht (C E H K P R S W); ein fehlender Buchstabe bricht mit einer
+Meldung ab, statt still ein Fragezeichen zu setzen.
 
 Zwei Fassungen: `dark` schreibt die Wortmarke in Knochenweiß `#E9E5DC`,
 `light` in der Flächenfarbe der Marke. Die Kachel bleibt gleich.
