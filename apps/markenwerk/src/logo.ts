@@ -11,7 +11,7 @@
 // Die Kachel selbst bleibt in beiden Fassungen unverändert.
 import type { Marke } from "./format.ts";
 import { kachelPfad, laeufe } from "./render.ts";
-import { HOEHE, wortmarke } from "./schrift.ts";
+import { type Fleck, HOEHE, wortmarke } from "./schrift.ts";
 
 export type LogoModus = "dark" | "light";
 
@@ -32,11 +32,22 @@ export function wortFarbe(marke: Marke, modus: LogoModus): string {
   return modus === "dark" ? KNOCHENWEISS : marke.surface;
 }
 
+/**
+ * Wie breit die Wortmarke im Raster ist: gemessen am letzten gemalten Pixel,
+ * nicht am Vorschub der Buchstaben. Zeichnet eine Glyphe über ihren Vorschub
+ * hinaus, schneidet der viewBox sie sonst an — genau das war beim „K" zu
+ * sehen, dessen Arme bis an den Rand des Kästchens reichen.
+ */
+export function wortBreite(flecken: readonly Fleck[], vorschub: number): number {
+  const gemalt = flecken.reduce((max, f) => Math.max(max, f.x + f.breite), 0);
+  return Math.max(vorschub, gemalt);
+}
+
 /** SVG des Logos: Achteck-Kachel links, Wortmarke rechts. */
 export function logoQuelle(marke: Marke, modus: LogoModus, text = marke.name): string {
   const size = marke.pixels.length;
   const { flecken, breite } = wortmarke(text.toUpperCase());
-  const schriftBreite = breite * SCHRIFT_MASS;
+  const schriftBreite = wortBreite(flecken, breite) * SCHRIFT_MASS;
   const gesamtBreite = size + ABSTAND + schriftBreite + 2 * RAND;
   const gesamtHoehe = size + 2 * RAND;
   const schriftHoehe = HOEHE * SCHRIFT_MASS;

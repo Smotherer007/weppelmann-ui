@@ -17,12 +17,22 @@ test("jede Glyphe ist rechteckig und nicht hoeher als das Raster", () => {
 test("setzt die Wortmarke in Laeufe", () => {
   const { flecken, breite } = wortmarke("SPRECHWERK");
   assert.ok(flecken.length > 40, `nur ${flecken.length} Rechtecke`);
-  // 9 Buchstaben zu 6 Spalten, W mit 10, dazu 9 Fugen: 73
-  assert.equal(breite, 73);
+  // 9 Buchstaben zu 6 Spalten, das W mit 8, dazu 9 Fugen: 71
+  assert.equal(breite, 71);
   // Alle Flecken liegen im Raster.
   for (const f of flecken) {
     assert.ok(f.y >= 0 && f.y < HOEHE);
     assert.ok(f.x >= 0 && f.x + f.breite <= breite);
+  }
+});
+
+test("kein Buchstabe malt ueber seinen Vorschub hinaus", () => {
+  // Sonst schneidet der viewBox des Logos die letzte Glyphe an — beim „K" stand
+  // die Spitze der Arme genau auf der Kante.
+  for (const zeichen of Object.keys(SCHRIFT)) {
+    const { flecken, breite } = wortmarke(zeichen);
+    const rechts = Math.max(...flecken.map((f) => f.x + f.breite));
+    assert.ok(rechts <= breite, `${zeichen}: malt bis ${rechts}, Vorschub nur ${breite}`);
   }
 });
 

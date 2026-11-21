@@ -5,8 +5,10 @@
 // Marke soll überall gleich aussehen. Acht Buchstaben als Raster sind billiger
 // als eine Schriftdatei und passen zur Regel „Icons entstehen aus Text".
 //
-// Raster: 6 Spalten breit, 8 Zeilen hoch (W: 7 Spalten), Strich 2 px. Bei
-// Maßstab 2 sind das 12 × 16 Einheiten im 32er-Raster des Zeichens.
+// Raster: 6 Spalten breit, 8 Zeilen hoch, Strich 2 px (zwei Zellen). Nur das W
+// braucht 8 Spalten: für drei senkrechte Stämme mit 1 px Fuge dazwischen gibt
+// es bei 6 keine Lösung. Bei Maßstab 2 sind das 12 × 16 Einheiten im 32er-Raster
+// des Zeichens.
 
 export type Glyphe = readonly string[];
 
@@ -43,14 +45,14 @@ export const SCHRIFT: Record<string, Glyphe> = {
     "##..##",
   ],
   K: [
-    "##...#",
+    "##..##",
     "##..##",
     "##.##.",
     "####..",
     "####..",
     "##.##.",
     "##..##",
-    "##...#",
+    "##..##",
   ],
   P: [
     "#####.",
@@ -83,14 +85,14 @@ export const SCHRIFT: Record<string, Glyphe> = {
     ".####.",
   ],
   W: [
-    "##...##...",
-    "##...##...",
-    "##...##...",
-    ".##.##.##.",
-    ".##.##.##.",
-    "..###.###.",
-    "..###.###.",
-    "...#...#..",
+    "##....##",
+    "##....##",
+    "##....##",
+    "##.##.##",
+    "##.##.##",
+    "##.##.##",
+    "########",
+    "########",
   ],
 };
 
