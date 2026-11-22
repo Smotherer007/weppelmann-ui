@@ -31,22 +31,19 @@ gleicher Detailgrad. Wie bei einer Serie Zeichnungen aus einem Skizzenbuch.
    Produktnamen: Wabe für Verwaltung, Bildschirm mit Licht für Ambilight, zwei
    gekreuzte Stecker für Crosspoint.
 4. **Farbzuordnung** — eine kräftige Fläche je Anwendung, Rest der Zeichnung
-   immer Knochenweiß. Eine Ausnahme gibt es (Sprechwerk, Zeile unten): zwei
-   Farben im Zeichen, wenn zwei Formen sich sonst nicht lösen.
+   immer Knochenweiß.
 
    | Anwendung | Fläche | Zeichnung | Motiv |
    |---|---|---|---|
    | Hexwerk | `#4F7A2E` | `#E9E5DC` | Wabe, drei Zellen, Haken („verwaltet") |
    | WLED Ambilight | `#A8321E` | `#E9E5DC` | Bildschirm, Licht fällt nach außen |
    | Crosspoint | `#C9862C` | `#E9E5DC` | zwei Klinkenstecker, die sich kreuzen |
-   | Sprechwerk | `#0E1319` | `#2EE6C8`, Schatten `#F7931E` | zwei Sprechblasen, Wellen darin |
 
-   **Sprechwerk ist die Ausnahme** (Entscheidung vom 2026-11-21): Fläche dunkel,
-   Zeichnung türkis, Schatten orange — zwei Farben im Zeichen, damit die vordere
-   Blase sich von der hinteren löst. Die Werte stehen in
-   `packages/tokens/src/primitives.tokens.json` unter `color.marke.sprechwerk`,
-   die Begründung in `sprechwerk/docs/adr/0014-marke-zwei-farben.md`. Die
-   Achteck-Kachel und die 2-px-Strichsprache bleiben.
+   **Sprechwerk führt seine Marke selbst:** Zeichen und Wortmarke sind aus einer
+   Vorlage des Nutzers übernommen (dunkle Kachel, türkise und orange
+   Sprechblase, gezeichnete Buchstabenpfade) und stehen als SVG in der App —
+   nicht als Raster und nicht in `apps/markenwerk`. Warum, mit Werten:
+   `sprechwerk/docs/adr/0015-logo-und-farben.md`.
 
 5. **Kleine Größen.** Bei 16 und 24 px bleibt eine Form plus ein Detail; die
    Binnenlinien entfallen. Gemessen: zwei gleich gewichtete Formen auf 16 px
@@ -56,19 +53,13 @@ gleicher Detailgrad. Wie bei einer Serie Zeichnungen aus einem Skizzenbuch.
 
 ## Wortmarke und Logo
 
-Neben dem Zeichen gibt es die Wortmarke: „SPRECHWERK" in Pixellettern
-(`apps/markenwerk/src/schrift.ts`, 7 × 10 Zellen, Strich 2 px). Ein SVG mit
-`<text>` wäre billiger, sieht aber auf jedem Rechner anders aus — die Buchstaben
-sind deshalb Rechtecke wie das Zeichen.
-
-```
-cd apps/markenwerk
-node src/cli.ts logo sprechwerk   # -> dist/sprechwerk/logo-dark.svg, logo-light.svg
-```
-
-Zwei Fassungen, weil ein Logo auf beiden Gründen stehen muss: `dark` setzt die
-Wortmarke in Knochenweiß, `light` in der Flächenfarbe der Marke. Die Kachel ist
-in beiden gleich. In der Anwendung liegt das Ergebnis unter `docs/marke/`.
+Hier entsteht kein Logo mehr. `apps/markenwerk` erzeugt Zeichen aus einem Raster
+(SVG, PNG, Tray, Symbolstil) und sonst nichts: eine Wortmarke in Pixellettern
+war nur für sprechwerk gebaut, und sprechwerk führt sie selbst — aus einer
+Vorlage des Nutzers, als Buchstabenpfade
+(`sprechwerk/docs/adr/0015-logo-und-farben.md`). Crosspoint macht es genauso
+(`crosspoint/docs/adr/0008-logo-und-farben.md`). Wer eine Wortmarke braucht,
+zeichnet sie in der App, nicht in der Bibliothek.
 
 ## Ablage je Anwendung
 
