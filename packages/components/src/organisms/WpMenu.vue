@@ -2,7 +2,7 @@
 // Organismus: Menü hinter einem Auslöser. Ersetzt gtk::MenuButton + Popover.
 // Auf macOS erscheint später dieselbe Liste in der Menüleiste; die Komponente
 // entscheidet nichts über die Plattform, sie stellt dar, was übergeben wird.
-import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import type { MenuItem } from "../types";
 
 const props = withDefaults(
@@ -35,24 +35,52 @@ const active = ref(-1);
  * scrollenden Seitenleiste würde eine absolut positionierte Liste am Rand
  * abgeschnitten (live gesehen: halbe Menüpunkte).
  */
-const stelle = ref({ left: 0, top: 0 });
+const stelle = ref<{ left: number; top: number; maxHeight?: number }>({ left: 0, top: 0 });
 const BREITE = 220;
+/** Abstand zum Fensterrand und zum Auslöser. */
+const RAND = 8;
+const LUFT = 4;
 
+/**
+ * Die Liste bleibt **ganz im Fenster**: unter dem Auslöser, wenn sie dort
+ * Platz hat, sonst darüber; passt sie nirgends, nimmt sie die größere Seite
+ * und scrollt. Seitlich wird sie an den Rand geschoben. Gemessen wird die
+ * echte Größe der Liste, nicht eine angenommene.
+ */
 function messen() {
   const r = root.value?.getBoundingClientRect();
   if (!r) return;
-  const links = props.align === "left" ? r.left : r.right - BREITE;
+  const breite = Math.max(BREITE, liste.value?.offsetWidth ?? BREITE);
+  const hoehe = liste.value?.scrollHeight ?? 0;
+  const links = props.align === "left" ? r.left : r.right - breite;
+  const unten = window.innerHeight - r.bottom - LUFT - RAND;
+  const oben = r.top - LUFT - RAND;
+  const nach_oben = hoehe > unten && oben > unten;
+  const platz = Math.max(0, nach_oben ? oben : unten);
+  const sichtbar = Math.min(hoehe, platz);
   stelle.value = {
-    left: Math.max(8, Math.min(links, window.innerWidth - BREITE - 8)),
-    top: Math.min(r.bottom + 4, window.innerHeight - 8),
+    left: Math.max(RAND, Math.min(links, window.innerWidth - breite - RAND)),
+    top: nach_oben ? r.top - LUFT - sichtbar : r.bottom + LUFT,
+    maxHeight: hoehe > platz ? platz : undefined,
   };
+}
+
+/** Beim Scrollen und bei Größenänderung folgt die offene Liste. */
+function nachfuehren(event?: Event) {
+  if (!offen.value) return;
+  if (event && liste.value && event.target instanceof Node && liste.value.contains(event.target)) return;
+  messen();
 }
 
 /** Offen? Entweder gesteuert von außen oder selbst entschieden. */
 const offen = computed(() => (props.open === null ? eigen.value : props.open));
 
-watch(offen, (istOffen) => {
-  if (istOffen) messen();
+watch(offen, async (istOffen) => {
+  if (!istOffen) return;
+  // Erst grob setzen, dann mit der echten Größe der Liste nachrechnen.
+  messen();
+  await nextTick();
+  messen();
 });
 
 function setzeOffen(wert: boolean) {
@@ -113,8 +141,16 @@ function onOutside(event: MouseEvent) {
   if (!drinnen) close();
 }
 // Bei gesteuertem Öffnen (Kontextmenü) schließt auch ein Klick außerhalb.
-onMounted(() => document.addEventListener("mousedown", onOutside));
-onBeforeUnmount(() => document.removeEventListener("mousedown", onOutside));
+onMounted(() => {
+  document.addEventListener("mousedown", onOutside);
+  document.addEventListener("scroll", nachfuehren, true);
+  window.addEventListener("resize", nachfuehren);
+});
+onBeforeUnmount(() => {
+  document.removeEventListener("mousedown", onOutside);
+  document.removeEventListener("scroll", nachfuehren, true);
+  window.removeEventListener("resize", nachfuehren);
+});
 </script>
 
 <template>
@@ -143,7 +179,11 @@ onBeforeUnmount(() => document.removeEventListener("mousedown", onOutside));
       ref="liste"
       class="wp-menu__list"
       :class="`is-${align ?? 'right'}`"
-      :style="{ left: `${stelle.left}px`, top: `${stelle.top}px` }"
+      :style="{
+        left: `${stelle.left}px`,
+        top: `${stelle.top}px`,
+        maxHeight: stelle.maxHeight === undefined ? undefined : `${stelle.maxHeight}px`,
+      }"
       role="menu"
       :aria-label="label"
       >
@@ -172,7 +212,7 @@ onBeforeUnmount(() => document.removeEventListener("mousedown", onOutside));
 .wp-menu__trigger { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; display: inline-flex; align-items: center; border-radius: var(--wp-radius-sm); }
 .wp-menu__trigger:focus-visible { outline: var(--wp-size-focus) solid var(--wp-color-focus-ring); outline-offset: 2px; }
 .wp-menu__list {
-  position: fixed; z-index: 60; min-width: 220px;
+  position: fixed; z-index: 60; min-width: 220px; overflow-y: auto;
   margin: 0; padding: 4px 0; list-style: none;
   background: var(--wp-color-bg-panel); border: var(--wp-size-border) solid var(--wp-color-border-strong);
   /* Kein Schatten: Trennung durch Rahmen, nicht durch Weichzeichnen. */

@@ -92,8 +92,13 @@ onBeforeUnmount(() => returnFocus?.focus());
   padding: var(--wp-space-5);
   background: color-mix(in srgb, #000000 62%, transparent);
 }
+/* Der Dialog bleibt **im Fenster**: höchstens so hoch wie der Platz im
+   Overlay. Titel und Knöpfe bleiben stehen, nur der Inhalt scrollt. */
 .wp-dialog {
+  display: flex; flex-direction: column;
   width: min(520px, 100%);
+  max-height: 100%;
+  min-height: 0;
   background: var(--wp-color-bg-panel);
   border: var(--wp-size-border) solid var(--wp-color-border-strong);
   border-top: 3px solid var(--wp-color-accent-default);
@@ -102,10 +107,10 @@ onBeforeUnmount(() => returnFocus?.focus());
 }
 .wp-dialog.tone-warn { border-top-color: var(--wp-color-status-warn); }
 .wp-dialog.tone-error { border-top-color: var(--wp-color-status-error); }
-.wp-dialog__title { margin: 0 0 var(--wp-space-1); font-size: var(--wp-font-size-lg); font-weight: var(--wp-font-weight-semibold); }
-.wp-dialog__desc { margin: 0; color: var(--wp-color-text-muted); font-size: var(--wp-font-size-md); line-height: var(--wp-font-line-normal); }
-.wp-dialog__body { margin-top: var(--wp-space-3); }
-.wp-dialog__actions { display: flex; justify-content: flex-end; gap: var(--wp-space-2); margin-top: var(--wp-space-4); }
+.wp-dialog__title { flex: none; margin: 0 0 var(--wp-space-1); font-size: var(--wp-font-size-lg); font-weight: var(--wp-font-weight-semibold); }
+.wp-dialog__desc { flex: none; margin: 0; color: var(--wp-color-text-muted); font-size: var(--wp-font-size-md); line-height: var(--wp-font-line-normal); }
+.wp-dialog__body { flex: 1 1 auto; min-height: 0; overflow-y: auto; margin-top: var(--wp-space-3); }
+.wp-dialog__actions { flex: none; display: flex; justify-content: flex-end; gap: var(--wp-space-2); margin-top: var(--wp-space-4); }
 .wp-dialog__btn {
   height: var(--wp-size-control-md); padding: 0 var(--wp-space-3);
   border: var(--wp-size-border) solid var(--wp-color-border-subtle);
